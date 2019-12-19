@@ -1,6 +1,6 @@
 %module nabto_api
 %{
-    #include "../inc/example.h"
+    #include "../extension/inc/example.h"
 %}
 
-%include "../inc/example.h"
+%include "../extension/inc/example.h"

@@ -5,7 +5,7 @@ from setuptools.command.build_py import build_py as _build_py
 
 
 class build_ext_first(_build_py):
-    def move_extention_to_package(self):
+    def move_extension_to_package(self):
         for f in glob.glob("build/lib.linux-**/*.so", recursive=False):
             chunks = f.split("/")
             new_name = "/".join([chunks[0], chunks[1], "nabto_client", chunks[2]],)
@@ -15,15 +15,15 @@ class build_ext_first(_build_py):
     def run(self):
         self.run_command('build_ext')
         _build_py.run(self)
-        self.move_extention_to_package()
+        self.move_extension_to_package()
 
 nabto_api = Extension(
     '_nabto_api',
     sources=[
         'nabto_client/nabto_client.i',
-        'src/example.c', 
+        'extension/src/example.c', 
     ],
-    include_dirs=['inc/'],
+    include_dirs=['extension/inc/'],
     
 )
 
