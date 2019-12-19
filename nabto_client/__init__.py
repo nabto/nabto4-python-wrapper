@@ -1,0 +1,1 @@
+from nabto_client.client import say_hello

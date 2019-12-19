@@ -4,10 +4,9 @@ all: build
 
 build:
 	@echo Building the library
-	swig -Wall -python nabto_client.i
-	python setup.py build_ext --inplace
+	python setup.py bdist_wheel
 
 clean:
-	rm -f nabto_client_wrap.c
-	rm -f nabto_api.py
+	rm -rf build
+	rm -rf dist
 	rm -rf nabto_client.egg-info
