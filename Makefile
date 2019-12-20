@@ -10,3 +10,5 @@ clean:
 	rm -rf build
 	rm -rf dist
 	rm -rf nabto_client.egg-info
+	rm nabto_client/nabto_api.py
+	rm nabto_client/nabto_client_wrap.cpp
