@@ -13,8 +13,11 @@ struct error {
 int nabto_startup(std::string home_dir);
 int nabto_shutdown(void);
 
+class TunnelWrapper;
+
 class SessionWrapper
 {
+    friend class TunnelWrapper;
 private:
     nabto_handle_t m_session;
 
@@ -28,6 +31,22 @@ public:
     int close_session(void);
     error rpc_set_default_interface(std::string interfaceDefinition);
     error rpc_invoke(std::string url);
+};
+
+//----Tunnel API----
+class TunnelWrapper
+{
+private:
+    nabto_tunnel_t m_tunnel;
+
+    TunnelWrapper(const TunnelWrapper&);
+    TunnelWrapper& operator=(TunnelWrapper&);
+public:
+    TunnelWrapper();
+    ~TunnelWrapper();
+
+    error open_tcp(SessionWrapper& session, int localPort, std::string nabtoHost, std::string remoteHost, int remotePort);
+    int close();
 };
 
 //----Profile Management API----
