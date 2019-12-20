@@ -21,10 +21,10 @@ nabto_api = Extension(
     '_nabto_api',
     sources=[
         'nabto_client/nabto_client.i',
-        'extension/src/example.c', 
+        'extension/src/wrapper.cpp', 
     ],
     swig_opts=['-c++'],
-    include_dirs=['extension/inc/'],
+    include_dirs=['extension/inc/', 'extension/linux64/include/'],
     library_dirs=['extension/linux64/lib/'],
     libraries=['nabto_client_api_static', 'nabto_static_external'],
 )
