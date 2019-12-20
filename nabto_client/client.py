@@ -1,5 +1,6 @@
 import nabto_client.nabto_api as api
-from nabto_client.exception import NabtoException
+from nabto_client.exception import check_status, check_result
+
 
 class NabtoSession:
     session = None
@@ -7,26 +8,18 @@ class NabtoSession:
     def __init__(self):
         self.session = api.SessionWrapper()
 
+    @check_status
     def openSession(self, user, password):
-        status = self.session.open_session(user, password)
-        if status != api.Status.NABTO_OK:
-            raise NabtoException(status)
+        return self.session.open_session(user, password)
 
+    @check_status
     def closeSession(self):
-        if self.session.close_session() != api.Status.NABTO_OK:
-            raise Exception("NabtoError")
+        return self.session.close_session()
 
+    @check_result
     def RpcSetDefaultInterface(self, interface):
-        err = self.session.rpc_set_default_interface(interface)
-        if err.status == api.Status.NABTO_FAILED_WITH_JSON_MESSAGE:
-            raise Exception(err.extra)
-        if err.status != api.Status.NABTO_OK:
-            raise Exception("NabtoError: " + err.status)
+        return self.session.rpc_set_default_interface(interface)
         
+    @check_result
     def RpcInvoke(self, url):
-        err = self.session.rpc_invoke(url)
-        if err.status == api.Status.NABTO_FAILED_WITH_JSON_MESSAGE:
-            raise Exception(err.extra)
-        if err.status != api.Status.NABTO_OK:
-            raise Exception("NabtoError: " + err.status)
-        return err.extra
+        return self.session.rpc_invoke(url)
