@@ -3,8 +3,8 @@
 all: build
 
 build:
-	@echo Building the library
-	python setup.py bdist_wheel
+	@echo Building the library using docker
+	docker build -t nabto-client . && docker run -v `pwd`/dist:/nabto-client/dist nabto-client python setup.py sdist bdist_wheel
 
 clean:
 	rm -rf build
