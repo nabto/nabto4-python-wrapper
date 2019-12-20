@@ -11,6 +11,37 @@ int nabto_shutdown(void) {
     return nabtoShutdown();
 }
 
+//----Profile Management API----
+
+int nabto_create_profile(std::string email, std::string password) {
+    return nabtoCreateProfile(email.c_str(), password.c_str());
+}
+
+int nabto_create_self_signed_profile(std::string id, std::string password) {
+    return nabtoCreateSelfSignedProfile(id.c_str(), password.c_str());
+}
+
+int nabto_remove_profile(std::string id) {
+    return nabtoRemoveProfile(id.c_str());
+}
+
+error nabto_get_fingerprint(std::string id) {
+    error result;
+    char fingerprint[16];
+    result.status = nabtoGetFingerprint(id.c_str(), fingerprint);
+
+    char fp[33] = {'\0'};
+    const char* table = "0123456789abcdef";
+    for(int i = 0; i < 16; i++) {
+        fp[2 * i] = table[(static_cast<unsigned char>(fingerprint[i]) >> 4)];
+        fp[2 * i + 1] = table[static_cast<unsigned char>(fingerprint[i] & 0x0f)];
+    }
+    result.extra = std::string(fp);
+    return result;
+}
+
+
+
 SessionWrapper::SessionWrapper(): m_session(nullptr) {
      std::cout << "SessionWrapper::ctor" << std::endl;
 }
@@ -35,9 +66,9 @@ int SessionWrapper::close_session(void) {
     return nabtoCloseSession(session);
 }
 
-Error SessionWrapper::rpc_set_default_interface(std::string xml) {
+error SessionWrapper::rpc_set_default_interface(std::string xml) {
     char* err;
-    Error result;
+    error result;
     result.status = nabtoRpcSetDefaultInterface(m_session, xml.c_str(), &err);
     if (result.status == NABTO_FAILED_WITH_JSON_MESSAGE) {
         result.extra = std::string(err);
@@ -46,9 +77,9 @@ Error SessionWrapper::rpc_set_default_interface(std::string xml) {
     return result;
 }
 
-Error SessionWrapper::rpc_invoke(std::string url) {
+error SessionWrapper::rpc_invoke(std::string url) {
     char* response;
-    Error result;
+    error result;
     result.status = nabtoRpcInvoke(m_session, url.c_str(), &response);
     result.extra = std::string(response);
     nabtoFree(response);
