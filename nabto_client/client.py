@@ -3,14 +3,23 @@ from nabto_client.exception import check_status, check_result
 
 
 class NabtoSession:
-    session = None
-
-    def __init__(self):
+    def __init__(self, user, password):
+        self.user = user
+        self.password = password
         self.session = api.SessionWrapper()
 
+    def __enter__(self):
+        self.openSession()
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.closeSession()
+        self.session = None
+
     @check_status
-    def openSession(self, user, password):
-        return self.session.open_session(user, password)
+    def openSession(self):
+        return self.session.open_session(self.user, self.password)
 
     @check_status
     def closeSession(self):

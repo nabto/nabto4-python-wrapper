@@ -27,7 +27,7 @@ def check_result(function):
         result = function(*args, **kwargs)
 
         if result.status != Status.NABTO_OK:
-            raise NabtoException(result.extra)
+            raise NabtoException(result.status, result.extra)
 
         return result.extra
 

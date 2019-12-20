@@ -11,7 +11,8 @@ def nabto_stuff():
         print("Startup failed")
 
     nabto_api.nabto_create_self_signed_profile("alex", "mypassword")
-    session = nabto_client.NabtoSession()
-    session.openSession("alex", "mypassword")
-    
+
+    with nabto_client.NabtoSession("alex", "mypassword") as session:
+        print('Opened session')
+
 nabto_stuff()
