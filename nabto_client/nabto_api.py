@@ -64,5 +64,207 @@ class _SwigNonDynamicMeta(type):
 
 def hello():
     return _nabto_api.hello()
+NABTO_OK = _nabto_api.NABTO_OK
+NABTO_NO_PROFILE = _nabto_api.NABTO_NO_PROFILE
+NABTO_ERROR_READING_CONFIG = _nabto_api.NABTO_ERROR_READING_CONFIG
+NABTO_API_NOT_INITIALIZED = _nabto_api.NABTO_API_NOT_INITIALIZED
+NABTO_INVALID_SESSION = _nabto_api.NABTO_INVALID_SESSION
+NABTO_OPEN_CERT_OR_PK_FAILED = _nabto_api.NABTO_OPEN_CERT_OR_PK_FAILED
+NABTO_UNLOCK_PK_FAILED = _nabto_api.NABTO_UNLOCK_PK_FAILED
+NABTO_PORTAL_LOGIN_FAILURE = _nabto_api.NABTO_PORTAL_LOGIN_FAILURE
+NABTO_CERT_SIGNING_ERROR = _nabto_api.NABTO_CERT_SIGNING_ERROR
+NABTO_CERT_SAVING_FAILURE = _nabto_api.NABTO_CERT_SAVING_FAILURE
+NABTO_ADDRESS_IN_USE = _nabto_api.NABTO_ADDRESS_IN_USE
+NABTO_INVALID_ADDRESS = _nabto_api.NABTO_INVALID_ADDRESS
+NABTO_NO_NETWORK = _nabto_api.NABTO_NO_NETWORK
+NABTO_CONNECT_TO_HOST_FAILED = _nabto_api.NABTO_CONNECT_TO_HOST_FAILED
+NABTO_STREAMING_UNSUPPORTED = _nabto_api.NABTO_STREAMING_UNSUPPORTED
+NABTO_INVALID_STREAM = _nabto_api.NABTO_INVALID_STREAM
+NABTO_DATA_PENDING = _nabto_api.NABTO_DATA_PENDING
+NABTO_BUFFER_FULL = _nabto_api.NABTO_BUFFER_FULL
+NABTO_FAILED = _nabto_api.NABTO_FAILED
+NABTO_INVALID_TUNNEL = _nabto_api.NABTO_INVALID_TUNNEL
+NABTO_ILLEGAL_PARAMETER = _nabto_api.NABTO_ILLEGAL_PARAMETER
+NABTO_INVALID_RESOURCE = _nabto_api.NABTO_INVALID_RESOURCE
+NABTO_INVALID_STREAM_OPTION = _nabto_api.NABTO_INVALID_STREAM_OPTION
+NABTO_INVALID_STREAM_OPTION_ARGUMENT = _nabto_api.NABTO_INVALID_STREAM_OPTION_ARGUMENT
+NABTO_ABORTED = _nabto_api.NABTO_ABORTED
+NABTO_STREAM_CLOSED = _nabto_api.NABTO_STREAM_CLOSED
+NABTO_FAILED_WITH_JSON_MESSAGE = _nabto_api.NABTO_FAILED_WITH_JSON_MESSAGE
+NABTO_ERROR_CODE_COUNT = _nabto_api.NABTO_ERROR_CODE_COUNT
+NCT_LOCAL = _nabto_api.NCT_LOCAL
+NCT_P2P = _nabto_api.NCT_P2P
+NCT_RELAY = _nabto_api.NCT_RELAY
+NCT_UNKNOWN = _nabto_api.NCT_UNKNOWN
+NCT_RELAY_MICRO = _nabto_api.NCT_RELAY_MICRO
+NSO_RCVTIMEO = _nabto_api.NSO_RCVTIMEO
+NSO_SNDTIMEO = _nabto_api.NSO_SNDTIMEO
+NTI_VERSION = _nabto_api.NTI_VERSION
+NTI_STATUS = _nabto_api.NTI_STATUS
+NTI_LAST_ERROR = _nabto_api.NTI_LAST_ERROR
+NTI_PORT = _nabto_api.NTI_PORT
+NTCS_CLOSED = _nabto_api.NTCS_CLOSED
+NTCS_CONNECTING = _nabto_api.NTCS_CONNECTING
+NTCS_READY_FOR_RECONNECT = _nabto_api.NTCS_READY_FOR_RECONNECT
+NTCS_UNKNOWN = _nabto_api.NTCS_UNKNOWN
+NTCS_LOCAL = _nabto_api.NTCS_LOCAL
+NTCS_REMOTE_P2P = _nabto_api.NTCS_REMOTE_P2P
+NTCS_REMOTE_RELAY = _nabto_api.NTCS_REMOTE_RELAY
+NTCS_REMOTE_RELAY_MICRO = _nabto_api.NTCS_REMOTE_RELAY_MICRO
+
+def nabtoStartup(nabtoHomeDir):
+    return _nabto_api.nabtoStartup(nabtoHomeDir)
+
+def nabtoShutdown():
+    return _nabto_api.nabtoShutdown()
+
+def nabtoOpenSession(session, id, password):
+    return _nabto_api.nabtoOpenSession(session, id, password)
+
+def nabtoCloseSession(session):
+    return _nabto_api.nabtoCloseSession(session)
+
+def nabtoSetBasestationAuthJson(session, jsonKeyValuePairs):
+    return _nabto_api.nabtoSetBasestationAuthJson(session, jsonKeyValuePairs)
+
+def nabtoSetLocalConnectionPsk(session, host, pskId, psk):
+    return _nabto_api.nabtoSetLocalConnectionPsk(session, host, pskId, psk)
+
+def nabtoVersionString(version):
+    return _nabto_api.nabtoVersionString(version)
+
+def nabtoRpcSetDefaultInterface(session, interfaceDefinition, errorMessage):
+    return _nabto_api.nabtoRpcSetDefaultInterface(session, interfaceDefinition, errorMessage)
+
+def nabtoRpcSetInterface(session, host, interfaceDefinition, errorMessage):
+    return _nabto_api.nabtoRpcSetInterface(session, host, interfaceDefinition, errorMessage)
+
+def nabtoRpcInvoke(session, nabtoUrl, jsonResponse):
+    return _nabto_api.nabtoRpcInvoke(session, nabtoUrl, jsonResponse)
+
+def nabtoStreamOpen(stream, session, serverId):
+    return _nabto_api.nabtoStreamOpen(stream, session, serverId)
+
+def nabtoStreamClose(stream):
+    return _nabto_api.nabtoStreamClose(stream)
+
+def nabtoStreamRead(stream, resultBuffer, resultLen):
+    return _nabto_api.nabtoStreamRead(stream, resultBuffer, resultLen)
+
+def nabtoStreamReadIntoBuf(stream, buffer, bufLen, resultLen):
+    return _nabto_api.nabtoStreamReadIntoBuf(stream, buffer, bufLen, resultLen)
+
+def nabtoStreamWrite(stream, buf, len):
+    return _nabto_api.nabtoStreamWrite(stream, buf, len)
+
+def nabtoStreamConnectionType(stream, type):
+    return _nabto_api.nabtoStreamConnectionType(stream, type)
+
+def nabtoStreamSetOption(stream, optionName, optionValue, optionLength):
+    return _nabto_api.nabtoStreamSetOption(stream, optionName, optionValue, optionLength)
+
+def nabtoTunnelOpenTcp(tunnel, session, localPort, nabtoHost, remoteHost, remotePort):
+    return _nabto_api.nabtoTunnelOpenTcp(tunnel, session, localPort, nabtoHost, remoteHost, remotePort)
+
+def nabtoTunnelClose(tunnel):
+    return _nabto_api.nabtoTunnelClose(tunnel)
+
+def nabtoTunnelInfo(tunnel, index, size, info):
+    return _nabto_api.nabtoTunnelInfo(tunnel, index, size, info)
+
+def nabtoCreateProfile(email, password):
+    return _nabto_api.nabtoCreateProfile(email, password)
+
+def nabtoCreateSelfSignedProfile(id, password):
+    return _nabto_api.nabtoCreateSelfSignedProfile(id, password)
+
+def nabtoRemoveProfile(id):
+    return _nabto_api.nabtoRemoveProfile(id)
+
+def nabtoGetFingerprint(id, fingerprint):
+    return _nabto_api.nabtoGetFingerprint(id, fingerprint)
+
+def nabtoRegisterLogCallback(callback):
+    return _nabto_api.nabtoRegisterLogCallback(callback)
+
+def nabtoStatusStr(status):
+    return _nabto_api.nabtoStatusStr(status)
+
+def nabtoGetProtocolPrefixes(prefixes, prefixesLength):
+    return _nabto_api.nabtoGetProtocolPrefixes(prefixes, prefixesLength)
+
+def nabtoGetCertificates(certificates, certificatesLength):
+    return _nabto_api.nabtoGetCertificates(certificates, certificatesLength)
+
+def nabtoGetLocalDevices(devices, numberOfDevices):
+    return _nabto_api.nabtoGetLocalDevices(devices, numberOfDevices)
+
+def nabtoFree(p):
+    return _nabto_api.nabtoFree(p)
+
+def nabtoSetApplicationName(applicationName):
+    return _nabto_api.nabtoSetApplicationName(applicationName)
+
+def nabtoSetStaticResourceDir(resourceDir):
+    return _nabto_api.nabtoSetStaticResourceDir(resourceDir)
+
+def nabtoInstallDefaultStaticResources(resourceDir):
+    return _nabto_api.nabtoInstallDefaultStaticResources(resourceDir)
+
+def nabtoSetOption(name, value):
+    return _nabto_api.nabtoSetOption(name, value)
+
+def nabtoVersion(major, minor):
+    return _nabto_api.nabtoVersion(major, minor)
+NAPDS_OK = _nabto_api.NAPDS_OK
+NAPDS_CLOSED = _nabto_api.NAPDS_CLOSED
+NAS_MIMETYPE_AVAILABLE = _nabto_api.NAS_MIMETYPE_AVAILABLE
+NAS_CHUNK_READY = _nabto_api.NAS_CHUNK_READY
+NAS_CLOSED = _nabto_api.NAS_CLOSED
+
+def nabtoFetchUrl(session, nabtoUrl, resultBuffer, resultLen, mimeTypeBuffer):
+    return _nabto_api.nabtoFetchUrl(session, nabtoUrl, resultBuffer, resultLen, mimeTypeBuffer)
+
+def nabtoSubmitPostData(session, nabtoUrl, postBuffer, postLen, postMimeType, resultBuffer, resultLen, resultMimeTypeBuffer):
+    return _nabto_api.nabtoSubmitPostData(session, nabtoUrl, postBuffer, postLen, postMimeType, resultBuffer, resultLen, resultMimeTypeBuffer)
+
+def nabtoGetSessionToken(session, buffer, bufLen, resultLen):
+    return _nabto_api.nabtoGetSessionToken(session, buffer, bufLen, resultLen)
+
+def nabtoAsyncSetPostData(resource, mimeType, cb, userData):
+    return _nabto_api.nabtoAsyncSetPostData(resource, mimeType, cb, userData)
+
+def nabtoAsyncPostData(resource, data, dataLength):
+    return _nabto_api.nabtoAsyncPostData(resource, data, dataLength)
+
+def nabtoAsyncPostClose(resource):
+    return _nabto_api.nabtoAsyncPostClose(resource)
+
+def nabtoAsyncFetch(resource, cb, userData):
+    return _nabto_api.nabtoAsyncFetch(resource, cb, userData)
+
+def nabtoGetAsyncData(resource, buf, bufSize, actualSize):
+    return _nabto_api.nabtoGetAsyncData(resource, buf, bufSize, actualSize)
+
+def nabtoOpenSessionBare(session):
+    return _nabto_api.nabtoOpenSessionBare(session)
+
+def nabtoAsyncInit(session, resource, url):
+    return _nabto_api.nabtoAsyncInit(session, resource, url)
+
+def nabtoAsyncClose(resource):
+    return _nabto_api.nabtoAsyncClose(resource)
+
+def nabtoAbortAsync(resource):
+    return _nabto_api.nabtoAbortAsync(resource)
+
+def nabtoSignup(email, password):
+    return _nabto_api.nabtoSignup(email, password)
+
+def nabtoResetAccountPassword(email):
+    return _nabto_api.nabtoResetAccountPassword(email)
+
+def nabtoProbeNetwork(timeoutMillis, host):
+    return _nabto_api.nabtoProbeNetwork(timeoutMillis, host)
 
 

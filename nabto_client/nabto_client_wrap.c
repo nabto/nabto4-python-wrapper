@@ -2634,8 +2634,30 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_char swig_types[0]
-static swig_type_info *swig_types[2];
-static swig_module_info swig_module = {swig_types, 1, 0, 0, 0, 0};
+#define SWIGTYPE_p_f_enum_nabto_async_status_p_void_p_void__void swig_types[1]
+#define SWIGTYPE_p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status swig_types[2]
+#define SWIGTYPE_p_f_p_q_const__char_size_t__void swig_types[3]
+#define SWIGTYPE_p_int swig_types[4]
+#define SWIGTYPE_p_nabto_async_post_data_status swig_types[5]
+#define SWIGTYPE_p_nabto_async_status swig_types[6]
+#define SWIGTYPE_p_nabto_connection_type swig_types[7]
+#define SWIGTYPE_p_nabto_opaque_async_resource swig_types[8]
+#define SWIGTYPE_p_nabto_opaque_handle swig_types[9]
+#define SWIGTYPE_p_nabto_opaque_stream swig_types[10]
+#define SWIGTYPE_p_nabto_opaque_tunnel swig_types[11]
+#define SWIGTYPE_p_nabto_status swig_types[12]
+#define SWIGTYPE_p_nabto_stream_option swig_types[13]
+#define SWIGTYPE_p_nabto_tunnel_info_selector swig_types[14]
+#define SWIGTYPE_p_nabto_tunnel_state swig_types[15]
+#define SWIGTYPE_p_p_char swig_types[16]
+#define SWIGTYPE_p_p_nabto_opaque_async_resource swig_types[17]
+#define SWIGTYPE_p_p_nabto_opaque_handle swig_types[18]
+#define SWIGTYPE_p_p_nabto_opaque_stream swig_types[19]
+#define SWIGTYPE_p_p_nabto_opaque_tunnel swig_types[20]
+#define SWIGTYPE_p_p_p_char swig_types[21]
+#define SWIGTYPE_p_size_t swig_types[22]
+static swig_type_info *swig_types[24];
+static swig_module_info swig_module = {swig_types, 23, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2667,6 +2689,460 @@ static swig_module_info swig_module = {swig_types, 1, 0, 0, 0, 0};
 
 
     #include "../extension/inc/example.h"
+    #include "../extension/linux64/include/nabto_client_api.h"
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_int  (int value)
+{
+  return PyInt_FromLong((long) value);
+}
+
+
+SWIGINTERN swig_type_info*
+SWIG_pchar_descriptor(void)
+{
+  static int init = 0;
+  static swig_type_info* info = 0;
+  if (!init) {
+    info = SWIG_TypeQuery("_p_char");
+    init = 1;
+  }
+  return info;
+}
+
+
+SWIGINTERN int
+SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
+{
+#if PY_VERSION_HEX>=0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+  if (PyBytes_Check(obj))
+#else
+  if (PyUnicode_Check(obj))
+#endif
+#else  
+  if (PyString_Check(obj))
+#endif
+  {
+    char *cstr; Py_ssize_t len;
+    int ret = SWIG_OK;
+#if PY_VERSION_HEX>=0x03000000
+#if !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+    if (!alloc && cptr) {
+        /* We can't allow converting without allocation, since the internal
+           representation of string in Python 3 is UCS-2/UCS-4 but we require
+           a UTF-8 representation.
+           TODO(bhy) More detailed explanation */
+        return SWIG_RuntimeError;
+    }
+    obj = PyUnicode_AsUTF8String(obj);
+    if (!obj)
+      return SWIG_TypeError;
+    if (alloc)
+      *alloc = SWIG_NEWOBJ;
+#endif
+    PyBytes_AsStringAndSize(obj, &cstr, &len);
+#else
+    PyString_AsStringAndSize(obj, &cstr, &len);
+#endif
+    if (cptr) {
+      if (alloc) {
+	if (*alloc == SWIG_NEWOBJ) {
+	  *cptr = (char *)memcpy(malloc((len + 1)*sizeof(char)), cstr, sizeof(char)*(len + 1));
+	  *alloc = SWIG_NEWOBJ;
+	} else {
+	  *cptr = cstr;
+	  *alloc = SWIG_OLDOBJ;
+	}
+      } else {
+#if PY_VERSION_HEX>=0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+	*cptr = PyBytes_AsString(obj);
+#else
+	assert(0); /* Should never reach here with Unicode strings in Python 3 */
+#endif
+#else
+	*cptr = SWIG_Python_str_AsChar(obj);
+        if (!*cptr)
+          ret = SWIG_TypeError;
+#endif
+      }
+    }
+    if (psize) *psize = len + 1;
+#if PY_VERSION_HEX>=0x03000000 && !defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+    Py_XDECREF(obj);
+#endif
+    return ret;
+  } else {
+#if defined(SWIG_PYTHON_2_UNICODE)
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+#error "Cannot use both SWIG_PYTHON_2_UNICODE and SWIG_PYTHON_STRICT_BYTE_CHAR at once"
+#endif
+#if PY_VERSION_HEX<0x03000000
+    if (PyUnicode_Check(obj)) {
+      char *cstr; Py_ssize_t len;
+      if (!alloc && cptr) {
+        return SWIG_RuntimeError;
+      }
+      obj = PyUnicode_AsUTF8String(obj);
+      if (!obj)
+        return SWIG_TypeError;
+      if (PyString_AsStringAndSize(obj, &cstr, &len) != -1) {
+        if (cptr) {
+          if (alloc) *alloc = SWIG_NEWOBJ;
+          *cptr = (char *)memcpy(malloc((len + 1)*sizeof(char)), cstr, sizeof(char)*(len + 1));
+        }
+        if (psize) *psize = len + 1;
+
+        Py_XDECREF(obj);
+        return SWIG_OK;
+      } else {
+        Py_XDECREF(obj);
+      }
+    }
+#endif
+#endif
+
+    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+    if (pchar_descriptor) {
+      void* vptr = 0;
+      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
+	if (cptr) *cptr = (char *) vptr;
+	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
+	if (alloc) *alloc = SWIG_OLDOBJ;
+	return SWIG_OK;
+      }
+    }
+  }
+  return SWIG_TypeError;
+}
+
+
+
+
+
+SWIGINTERN int
+SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
+{ 
+  char* cptr = 0; size_t csize = 0; int alloc = SWIG_OLDOBJ;
+  int res = SWIG_AsCharPtrAndSize(obj, &cptr, &csize, &alloc);
+  if (SWIG_IsOK(res)) {
+    /* special case of single char conversion when we don't need space for NUL */
+    if (size == 1 && csize == 2 && cptr && !cptr[1]) --csize;
+    if (csize <= size) {
+      if (val) {
+	if (csize) memcpy(val, cptr, csize*sizeof(char));
+	if (csize < size) memset(val + csize, 0, (size - csize)*sizeof(char));
+      }
+      if (alloc == SWIG_NEWOBJ) {
+	free((char*)cptr);
+	res = SWIG_DelNewMask(res);
+      }      
+      return res;
+    }
+    if (alloc == SWIG_NEWOBJ) free((char*)cptr);
+  }
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_double (PyObject *obj, double *val)
+{
+  int res = SWIG_TypeError;
+  if (PyFloat_Check(obj)) {
+    if (val) *val = PyFloat_AsDouble(obj);
+    return SWIG_OK;
+#if PY_VERSION_HEX < 0x03000000
+  } else if (PyInt_Check(obj)) {
+    if (val) *val = (double) PyInt_AsLong(obj);
+    return SWIG_OK;
+#endif
+  } else if (PyLong_Check(obj)) {
+    double v = PyLong_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    double d = PyFloat_AsDouble(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = d;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      long v = PyLong_AsLong(obj);
+      if (!PyErr_Occurred()) {
+	if (val) *val = v;
+	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
+      } else {
+	PyErr_Clear();
+      }
+    }
+  }
+#endif
+  return res;
+}
+
+
+#include <float.h>
+
+
+#include <math.h>
+
+
+SWIGINTERNINLINE int
+SWIG_CanCastAsInteger(double *d, double min, double max) {
+  double x = *d;
+  if ((min <= x && x <= max)) {
+   double fx = floor(x);
+   double cx = ceil(x);
+   double rd =  ((x - fx) < 0.5) ? fx : cx; /* simple rint */
+   if ((errno == EDOM) || (errno == ERANGE)) {
+     errno = 0;
+   } else {
+     double summ, reps, diff;
+     if (rd < x) {
+       diff = x - rd;
+     } else if (rd > x) {
+       diff = rd - x;
+     } else {
+       return 1;
+     }
+     summ = rd + x;
+     reps = diff/summ;
+     if (reps < 8*DBL_EPSILON) {
+       *d = rd;
+       return 1;
+     }
+   }
+  }
+  return 0;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    long v = PyInt_AsLong(obj);
+    if (v >= 0) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      return SWIG_OverflowError;
+    }
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      return SWIG_OverflowError;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    unsigned long v = PyLong_AsUnsignedLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
+	if (val) *val = (unsigned long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
+
+
+#include <limits.h>
+#if !defined(SWIG_NO_LLONG_MAX)
+# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
+#   define LLONG_MAX __LONG_LONG_MAX__
+#   define LLONG_MIN (-LLONG_MAX - 1LL)
+#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
+# endif
+#endif
+
+
+#if defined(LLONG_MAX) && !defined(SWIG_LONG_LONG_AVAILABLE)
+#  define SWIG_LONG_LONG_AVAILABLE
+#endif
+
+
+#ifdef SWIG_LONG_LONG_AVAILABLE
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long_SS_long (PyObject *obj, unsigned long long *val)
+{
+  int res = SWIG_TypeError;
+  if (PyLong_Check(obj)) {
+    unsigned long long v = PyLong_AsUnsignedLongLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      res = SWIG_OverflowError;
+    }
+  } else {
+    unsigned long v;
+    res = SWIG_AsVal_unsigned_SS_long (obj,&v);
+    if (SWIG_IsOK(res)) {
+      if (val) *val = v;
+      return res;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    const double mant_max = 1LL << DBL_MANT_DIG;
+    double d;
+    res = SWIG_AsVal_double (obj,&d);
+    if (SWIG_IsOK(res) && !SWIG_CanCastAsInteger(&d, 0, mant_max))
+      return SWIG_OverflowError;
+    if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, mant_max)) {
+      if (val) *val = (unsigned long long)(d);
+      return SWIG_AddCast(res);
+    }
+    res = SWIG_TypeError;
+  }
+#endif
+  return res;
+}
+#endif
+
+
+SWIGINTERNINLINE int
+SWIG_AsVal_size_t (PyObject * obj, size_t *val)
+{
+  int res = SWIG_TypeError;
+#ifdef SWIG_LONG_LONG_AVAILABLE
+  if (sizeof(size_t) <= sizeof(unsigned long)) {
+#endif
+    unsigned long v;
+    res = SWIG_AsVal_unsigned_SS_long (obj, val ? &v : 0);
+    if (SWIG_IsOK(res) && val) *val = (size_t)(v);
+#ifdef SWIG_LONG_LONG_AVAILABLE
+  } else if (sizeof(size_t) <= sizeof(unsigned long long)) {
+    unsigned long long v;
+    res = SWIG_AsVal_unsigned_SS_long_SS_long (obj, val ? &v : 0);
+    if (SWIG_IsOK(res) && val) *val = (size_t)(v);
+  }
+#endif
+  return res;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_long (PyObject *obj, long* val)
+{
+#if PY_VERSION_HEX < 0x03000000
+  if (PyInt_Check(obj)) {
+    if (val) *val = PyInt_AsLong(obj);
+    return SWIG_OK;
+  } else
+#endif
+  if (PyLong_Check(obj)) {
+    long v = PyLong_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      return SWIG_OverflowError;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    int dispatch = 0;
+    long v = PyInt_AsLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_AddCast(SWIG_OK);
+    } else {
+      PyErr_Clear();
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
+	if (val) *val = (long)(d);
+	return res;
+      }
+    }
+  }
+#endif
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_int (PyObject * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = (int)(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > INT_MAX) {
+      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+      return pchar_descriptor ? 
+	SWIG_InternalNewPointerObj((char *)(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+    } else {
+#if PY_VERSION_HEX >= 0x03000000
+#if defined(SWIG_PYTHON_STRICT_BYTE_CHAR)
+      return PyBytes_FromStringAndSize(carray, (Py_ssize_t)(size));
+#else
+      return PyUnicode_DecodeUTF8(carray, (Py_ssize_t)(size), "surrogateescape");
+#endif
+#else
+      return PyString_FromStringAndSize(carray, (Py_ssize_t)(size));
+#endif
+    }
+  } else {
+    return SWIG_Py_Void();
+  }
+}
+
+
+SWIGINTERNINLINE PyObject * 
+SWIG_FromCharPtr(const char *cptr)
+{ 
+  return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
+}
 
 #ifdef __cplusplus
 extern "C" {
@@ -2683,9 +3159,1828 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_nabtoStartup(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStartup" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoStartup((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoShutdown(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoShutdown", 0, 0, 0)) SWIG_fail;
+  result = (nabto_status_t)nabtoShutdown();
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoOpenSession(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t *arg1 = (nabto_handle_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoOpenSession", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoOpenSession" "', argument " "1"" of type '" "nabto_handle_t *""'"); 
+  }
+  arg1 = (nabto_handle_t *)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoOpenSession" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoOpenSession" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = (char *)(buf3);
+  result = (nabto_status_t)nabtoOpenSession(arg1,(char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoCloseSession(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoCloseSession" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  result = (nabto_status_t)nabtoCloseSession(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSetBasestationAuthJson(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoSetBasestationAuthJson", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSetBasestationAuthJson" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoSetBasestationAuthJson" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoSetBasestationAuthJson(arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSetLocalConnectionPsk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 ;
+  char *arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  char temp3[16] ;
+  int res3 ;
+  char temp4[16] ;
+  int res4 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoSetLocalConnectionPsk", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSetLocalConnectionPsk" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoSetLocalConnectionPsk" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_AsCharArray(swig_obj[2], temp3, 16);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoSetLocalConnectionPsk" "', argument " "3"" of type '" "char const [16]""'");
+  }
+  arg3 = (char *)(temp3);
+  res4 = SWIG_AsCharArray(swig_obj[3], temp4, 16);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoSetLocalConnectionPsk" "', argument " "4"" of type '" "char const [16]""'");
+  }
+  arg4 = (char *)(temp4);
+  result = (nabto_status_t)nabtoSetLocalConnectionPsk(arg1,(char const *)arg2,(char const (*))arg3,(char const (*))arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoVersionString(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoVersionString" "', argument " "1"" of type '" "char **""'"); 
+  }
+  arg1 = (char **)(argp1);
+  result = (nabto_status_t)nabtoVersionString(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoRpcSetDefaultInterface(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char **arg3 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoRpcSetDefaultInterface", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoRpcSetDefaultInterface" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoRpcSetDefaultInterface" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoRpcSetDefaultInterface" "', argument " "3"" of type '" "char **""'"); 
+  }
+  arg3 = (char **)(argp3);
+  result = (nabto_status_t)nabtoRpcSetDefaultInterface(arg1,(char const *)arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoRpcSetInterface(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  char **arg4 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoRpcSetInterface", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoRpcSetInterface" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoRpcSetInterface" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoRpcSetInterface" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = (char *)(buf3);
+  res4 = SWIG_ConvertPtr(swig_obj[3], &argp4,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoRpcSetInterface" "', argument " "4"" of type '" "char **""'"); 
+  }
+  arg4 = (char **)(argp4);
+  result = (nabto_status_t)nabtoRpcSetInterface(arg1,(char const *)arg2,(char const *)arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoRpcInvoke(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char **arg3 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoRpcInvoke", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoRpcInvoke" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoRpcInvoke" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoRpcInvoke" "', argument " "3"" of type '" "char **""'"); 
+  }
+  arg3 = (char **)(argp3);
+  result = (nabto_status_t)nabtoRpcInvoke(arg1,(char const *)arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamOpen(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t *arg1 = (nabto_stream_t *) 0 ;
+  nabto_handle_t arg2 = (nabto_handle_t) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamOpen", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamOpen" "', argument " "1"" of type '" "nabto_stream_t *""'"); 
+  }
+  arg1 = (nabto_stream_t *)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoStreamOpen" "', argument " "2"" of type '" "nabto_handle_t""'"); 
+  }
+  arg2 = (nabto_handle_t)(argp2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoStreamOpen" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = (char *)(buf3);
+  result = (nabto_status_t)nabtoStreamOpen(arg1,arg2,(char const *)arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return resultobj;
+fail:
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamClose(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamClose" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  result = (nabto_status_t)nabtoStreamClose(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamRead(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  char **arg2 = (char **) 0 ;
+  size_t *arg3 = (size_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamRead", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamRead" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoStreamRead" "', argument " "2"" of type '" "char **""'"); 
+  }
+  arg2 = (char **)(argp2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoStreamRead" "', argument " "3"" of type '" "size_t *""'"); 
+  }
+  arg3 = (size_t *)(argp3);
+  result = (nabto_status_t)nabtoStreamRead(arg1,arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamReadIntoBuf(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  size_t arg3 ;
+  size_t *arg4 = (size_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamReadIntoBuf", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamReadIntoBuf" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoStreamReadIntoBuf" "', argument " "2"" of type '" "char *""'");
+  }
+  arg2 = (char *)(buf2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoStreamReadIntoBuf" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  res4 = SWIG_ConvertPtr(swig_obj[3], &argp4,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoStreamReadIntoBuf" "', argument " "4"" of type '" "size_t *""'"); 
+  }
+  arg4 = (size_t *)(argp4);
+  result = (nabto_status_t)nabtoStreamReadIntoBuf(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamWrite(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  size_t arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamWrite", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamWrite" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoStreamWrite" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoStreamWrite" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  result = (nabto_status_t)nabtoStreamWrite(arg1,(char const *)arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamConnectionType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  nabto_connection_type_t *arg2 = (nabto_connection_type_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamConnectionType", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamConnectionType" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_nabto_connection_type, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoStreamConnectionType" "', argument " "2"" of type '" "nabto_connection_type_t *""'"); 
+  }
+  arg2 = (nabto_connection_type_t *)(argp2);
+  result = (nabto_status_t)nabtoStreamConnectionType(arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStreamSetOption(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_stream_t arg1 = (nabto_stream_t) 0 ;
+  nabto_stream_option_t arg2 ;
+  void *arg3 = (void *) 0 ;
+  size_t arg4 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int res3 ;
+  size_t val4 ;
+  int ecode4 = 0 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoStreamSetOption", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_stream, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoStreamSetOption" "', argument " "1"" of type '" "nabto_stream_t""'"); 
+  }
+  arg1 = (nabto_stream_t)(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "nabtoStreamSetOption" "', argument " "2"" of type '" "nabto_stream_option_t""'");
+  } 
+  arg2 = (nabto_stream_option_t)(val2);
+  res3 = SWIG_ConvertPtr(swig_obj[2],SWIG_as_voidptrptr(&arg3), 0, 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoStreamSetOption" "', argument " "3"" of type '" "void const *""'"); 
+  }
+  ecode4 = SWIG_AsVal_size_t(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "nabtoStreamSetOption" "', argument " "4"" of type '" "size_t""'");
+  } 
+  arg4 = (size_t)(val4);
+  result = (nabto_status_t)nabtoStreamSetOption(arg1,arg2,(void const *)arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoTunnelOpenTcp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_tunnel_t *arg1 = (nabto_tunnel_t *) 0 ;
+  nabto_handle_t arg2 = (nabto_handle_t) 0 ;
+  int arg3 ;
+  char *arg4 = (char *) 0 ;
+  char *arg5 = (char *) 0 ;
+  int arg6 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int res4 ;
+  char *buf4 = 0 ;
+  int alloc4 = 0 ;
+  int res5 ;
+  char *buf5 = 0 ;
+  int alloc5 = 0 ;
+  int val6 ;
+  int ecode6 = 0 ;
+  PyObject *swig_obj[6] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoTunnelOpenTcp", 6, 6, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_nabto_opaque_tunnel, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoTunnelOpenTcp" "', argument " "1"" of type '" "nabto_tunnel_t *""'"); 
+  }
+  arg1 = (nabto_tunnel_t *)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoTunnelOpenTcp" "', argument " "2"" of type '" "nabto_handle_t""'"); 
+  }
+  arg2 = (nabto_handle_t)(argp2);
+  ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoTunnelOpenTcp" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  res4 = SWIG_AsCharPtrAndSize(swig_obj[3], &buf4, NULL, &alloc4);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoTunnelOpenTcp" "', argument " "4"" of type '" "char const *""'");
+  }
+  arg4 = (char *)(buf4);
+  res5 = SWIG_AsCharPtrAndSize(swig_obj[4], &buf5, NULL, &alloc5);
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "nabtoTunnelOpenTcp" "', argument " "5"" of type '" "char const *""'");
+  }
+  arg5 = (char *)(buf5);
+  ecode6 = SWIG_AsVal_int(swig_obj[5], &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "nabtoTunnelOpenTcp" "', argument " "6"" of type '" "int""'");
+  } 
+  arg6 = (int)(val6);
+  result = (nabto_status_t)nabtoTunnelOpenTcp(arg1,arg2,arg3,(char const *)arg4,(char const *)arg5,arg6);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
+  if (alloc5 == SWIG_NEWOBJ) free((char*)buf5);
+  return resultobj;
+fail:
+  if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
+  if (alloc5 == SWIG_NEWOBJ) free((char*)buf5);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoTunnelClose(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_tunnel_t arg1 = (nabto_tunnel_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_tunnel, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoTunnelClose" "', argument " "1"" of type '" "nabto_tunnel_t""'"); 
+  }
+  arg1 = (nabto_tunnel_t)(argp1);
+  result = (nabto_status_t)nabtoTunnelClose(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoTunnelInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_tunnel_t arg1 = (nabto_tunnel_t) 0 ;
+  nabto_tunnel_info_selector_t arg2 ;
+  size_t arg3 ;
+  void *arg4 = (void *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  int res4 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoTunnelInfo", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_tunnel, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoTunnelInfo" "', argument " "1"" of type '" "nabto_tunnel_t""'"); 
+  }
+  arg1 = (nabto_tunnel_t)(argp1);
+  ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "nabtoTunnelInfo" "', argument " "2"" of type '" "nabto_tunnel_info_selector_t""'");
+  } 
+  arg2 = (nabto_tunnel_info_selector_t)(val2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoTunnelInfo" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  res4 = SWIG_ConvertPtr(swig_obj[3],SWIG_as_voidptrptr(&arg4), 0, 0);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoTunnelInfo" "', argument " "4"" of type '" "void *""'"); 
+  }
+  result = (nabto_status_t)nabtoTunnelInfo(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoCreateProfile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoCreateProfile", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoCreateProfile" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoCreateProfile" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoCreateProfile((char const *)arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoCreateSelfSignedProfile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoCreateSelfSignedProfile", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoCreateSelfSignedProfile" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoCreateSelfSignedProfile" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoCreateSelfSignedProfile((char const *)arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoRemoveProfile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoRemoveProfile" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoRemoveProfile((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetFingerprint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  char temp2[16] ;
+  int res2 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetFingerprint", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetFingerprint" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_AsCharArray(swig_obj[1], temp2, 16);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetFingerprint" "', argument " "2"" of type '" "char [16]""'");
+  }
+  arg2 = (char *)(temp2);
+  result = (nabto_status_t)nabtoGetFingerprint((char const *)arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoRegisterLogCallback(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  NabtoLogCallbackFunc arg1 = (NabtoLogCallbackFunc) 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  {
+    int res = SWIG_ConvertFunctionPtr(swig_obj[0], (void**)(&arg1), SWIGTYPE_p_f_p_q_const__char_size_t__void);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "nabtoRegisterLogCallback" "', argument " "1"" of type '" "NabtoLogCallbackFunc""'"); 
+    }
+  }
+  result = (nabto_status_t)nabtoRegisterLogCallback(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoStatusStr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_status_t arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  char *result = 0 ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_int(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "nabtoStatusStr" "', argument " "1"" of type '" "nabto_status_t""'");
+  } 
+  arg1 = (nabto_status_t)(val1);
+  result = (char *)nabtoStatusStr(arg1);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetProtocolPrefixes(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char ***arg1 = (char ***) 0 ;
+  int *arg2 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetProtocolPrefixes", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetProtocolPrefixes" "', argument " "1"" of type '" "char ***""'"); 
+  }
+  arg1 = (char ***)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetProtocolPrefixes" "', argument " "2"" of type '" "int *""'"); 
+  }
+  arg2 = (int *)(argp2);
+  result = (nabto_status_t)nabtoGetProtocolPrefixes(arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetCertificates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char ***arg1 = (char ***) 0 ;
+  int *arg2 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetCertificates", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetCertificates" "', argument " "1"" of type '" "char ***""'"); 
+  }
+  arg1 = (char ***)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetCertificates" "', argument " "2"" of type '" "int *""'"); 
+  }
+  arg2 = (int *)(argp2);
+  result = (nabto_status_t)nabtoGetCertificates(arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetLocalDevices(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char ***arg1 = (char ***) 0 ;
+  int *arg2 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetLocalDevices", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetLocalDevices" "', argument " "1"" of type '" "char ***""'"); 
+  }
+  arg1 = (char ***)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetLocalDevices" "', argument " "2"" of type '" "int *""'"); 
+  }
+  arg2 = (int *)(argp2);
+  result = (nabto_status_t)nabtoGetLocalDevices(arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoFree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  void *arg1 = (void *) 0 ;
+  int res1 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0],SWIG_as_voidptrptr(&arg1), 0, 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoFree" "', argument " "1"" of type '" "void *""'"); 
+  }
+  result = (nabto_status_t)nabtoFree(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSetApplicationName(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSetApplicationName" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoSetApplicationName((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSetStaticResourceDir(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSetStaticResourceDir" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoSetStaticResourceDir((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoInstallDefaultStaticResources(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoInstallDefaultStaticResources" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoInstallDefaultStaticResources((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSetOption(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoSetOption", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSetOption" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoSetOption" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoSetOption((char const *)arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoVersion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int *arg1 = (int *) 0 ;
+  int *arg2 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoVersion", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoVersion" "', argument " "1"" of type '" "int *""'"); 
+  }
+  arg1 = (int *)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoVersion" "', argument " "2"" of type '" "int *""'"); 
+  }
+  arg2 = (int *)(argp2);
+  result = (nabto_status_t)nabtoVersion(arg1,arg2);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoFetchUrl(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char **arg3 = (char **) 0 ;
+  size_t *arg4 = (size_t *) 0 ;
+  char **arg5 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  PyObject *swig_obj[5] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoFetchUrl", 5, 5, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoFetchUrl" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoFetchUrl" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_ConvertPtr(swig_obj[2], &argp3,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoFetchUrl" "', argument " "3"" of type '" "char **""'"); 
+  }
+  arg3 = (char **)(argp3);
+  res4 = SWIG_ConvertPtr(swig_obj[3], &argp4,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoFetchUrl" "', argument " "4"" of type '" "size_t *""'"); 
+  }
+  arg4 = (size_t *)(argp4);
+  res5 = SWIG_ConvertPtr(swig_obj[4], &argp5,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "nabtoFetchUrl" "', argument " "5"" of type '" "char **""'"); 
+  }
+  arg5 = (char **)(argp5);
+  result = (nabto_status_t)nabtoFetchUrl(arg1,(char const *)arg2,arg3,arg4,arg5);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSubmitPostData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  size_t arg4 ;
+  char *arg5 = (char *) 0 ;
+  char **arg6 = (char **) 0 ;
+  size_t *arg7 = (size_t *) 0 ;
+  char **arg8 = (char **) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  size_t val4 ;
+  int ecode4 = 0 ;
+  int res5 ;
+  char *buf5 = 0 ;
+  int alloc5 = 0 ;
+  void *argp6 = 0 ;
+  int res6 = 0 ;
+  void *argp7 = 0 ;
+  int res7 = 0 ;
+  void *argp8 = 0 ;
+  int res8 = 0 ;
+  PyObject *swig_obj[8] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoSubmitPostData", 8, 8, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSubmitPostData" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoSubmitPostData" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoSubmitPostData" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = (char *)(buf3);
+  ecode4 = SWIG_AsVal_size_t(swig_obj[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "nabtoSubmitPostData" "', argument " "4"" of type '" "size_t""'");
+  } 
+  arg4 = (size_t)(val4);
+  res5 = SWIG_AsCharPtrAndSize(swig_obj[4], &buf5, NULL, &alloc5);
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "nabtoSubmitPostData" "', argument " "5"" of type '" "char const *""'");
+  }
+  arg5 = (char *)(buf5);
+  res6 = SWIG_ConvertPtr(swig_obj[5], &argp6,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res6)) {
+    SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "nabtoSubmitPostData" "', argument " "6"" of type '" "char **""'"); 
+  }
+  arg6 = (char **)(argp6);
+  res7 = SWIG_ConvertPtr(swig_obj[6], &argp7,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res7)) {
+    SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "nabtoSubmitPostData" "', argument " "7"" of type '" "size_t *""'"); 
+  }
+  arg7 = (size_t *)(argp7);
+  res8 = SWIG_ConvertPtr(swig_obj[7], &argp8,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res8)) {
+    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "nabtoSubmitPostData" "', argument " "8"" of type '" "char **""'"); 
+  }
+  arg8 = (char **)(argp8);
+  result = (nabto_status_t)nabtoSubmitPostData(arg1,(char const *)arg2,(char const *)arg3,arg4,(char const *)arg5,arg6,arg7,arg8);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  if (alloc5 == SWIG_NEWOBJ) free((char*)buf5);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  if (alloc5 == SWIG_NEWOBJ) free((char*)buf5);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetSessionToken(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  size_t arg3 ;
+  size_t *arg4 = (size_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetSessionToken", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetSessionToken" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetSessionToken" "', argument " "2"" of type '" "char *""'");
+  }
+  arg2 = (char *)(buf2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoGetSessionToken" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  res4 = SWIG_ConvertPtr(swig_obj[3], &argp4,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoGetSessionToken" "', argument " "4"" of type '" "size_t *""'"); 
+  }
+  arg4 = (size_t *)(argp4);
+  result = (nabto_status_t)nabtoGetSessionToken(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncSetPostData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  NabtoAsyncPostDataCallbackFunc arg3 = (NabtoAsyncPostDataCallbackFunc) 0 ;
+  void *arg4 = (void *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res4 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoAsyncSetPostData", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncSetPostData" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoAsyncSetPostData" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  {
+    int res = SWIG_ConvertFunctionPtr(swig_obj[2], (void**)(&arg3), SWIGTYPE_p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "nabtoAsyncSetPostData" "', argument " "3"" of type '" "NabtoAsyncPostDataCallbackFunc""'"); 
+    }
+  }
+  res4 = SWIG_ConvertPtr(swig_obj[3],SWIG_as_voidptrptr(&arg4), 0, 0);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoAsyncSetPostData" "', argument " "4"" of type '" "void *""'"); 
+  }
+  result = (nabto_status_t)nabtoAsyncSetPostData(arg1,(char const *)arg2,arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncPostData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  size_t arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoAsyncPostData", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncPostData" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoAsyncPostData" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoAsyncPostData" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  result = (nabto_status_t)nabtoAsyncPostData(arg1,(char const *)arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncPostClose(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncPostClose" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  result = (nabto_status_t)nabtoAsyncPostClose(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncFetch(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  NabtoAsyncStatusCallbackFunc arg2 = (NabtoAsyncStatusCallbackFunc) 0 ;
+  void *arg3 = (void *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res3 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoAsyncFetch", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncFetch" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(swig_obj[1], (void**)(&arg2), SWIGTYPE_p_f_enum_nabto_async_status_p_void_p_void__void);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "nabtoAsyncFetch" "', argument " "2"" of type '" "NabtoAsyncStatusCallbackFunc""'"); 
+    }
+  }
+  res3 = SWIG_ConvertPtr(swig_obj[2],SWIG_as_voidptrptr(&arg3), 0, 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoAsyncFetch" "', argument " "3"" of type '" "void *""'"); 
+  }
+  result = (nabto_status_t)nabtoAsyncFetch(arg1,arg2,arg3);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoGetAsyncData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  char *arg2 = (char *) 0 ;
+  size_t arg3 ;
+  size_t *arg4 = (size_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  size_t val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject *swig_obj[4] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoGetAsyncData", 4, 4, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoGetAsyncData" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoGetAsyncData" "', argument " "2"" of type '" "char *""'");
+  }
+  arg2 = (char *)(buf2);
+  ecode3 = SWIG_AsVal_size_t(swig_obj[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "nabtoGetAsyncData" "', argument " "3"" of type '" "size_t""'");
+  } 
+  arg3 = (size_t)(val3);
+  res4 = SWIG_ConvertPtr(swig_obj[3], &argp4,SWIGTYPE_p_size_t, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "nabtoGetAsyncData" "', argument " "4"" of type '" "size_t *""'"); 
+  }
+  arg4 = (size_t *)(argp4);
+  result = (nabto_status_t)nabtoGetAsyncData(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoOpenSessionBare(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t *arg1 = (nabto_handle_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoOpenSessionBare" "', argument " "1"" of type '" "nabto_handle_t *""'"); 
+  }
+  arg1 = (nabto_handle_t *)(argp1);
+  result = (nabto_status_t)nabtoOpenSessionBare(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncInit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_handle_t arg1 = (nabto_handle_t) 0 ;
+  nabto_async_resource_t *arg2 = (nabto_async_resource_t *) 0 ;
+  char *arg3 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int res3 ;
+  char *buf3 = 0 ;
+  int alloc3 = 0 ;
+  PyObject *swig_obj[3] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoAsyncInit", 3, 3, swig_obj)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_handle, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncInit" "', argument " "1"" of type '" "nabto_handle_t""'"); 
+  }
+  arg1 = (nabto_handle_t)(argp1);
+  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoAsyncInit" "', argument " "2"" of type '" "nabto_async_resource_t *""'"); 
+  }
+  arg2 = (nabto_async_resource_t *)(argp2);
+  res3 = SWIG_AsCharPtrAndSize(swig_obj[2], &buf3, NULL, &alloc3);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "nabtoAsyncInit" "', argument " "3"" of type '" "char const *""'");
+  }
+  arg3 = (char *)(buf3);
+  result = (nabto_status_t)nabtoAsyncInit(arg1,arg2,(char const *)arg3);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return resultobj;
+fail:
+  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAsyncClose(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAsyncClose" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  result = (nabto_status_t)nabtoAsyncClose(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoAbortAsync(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  nabto_async_resource_t arg1 = (nabto_async_resource_t) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_nabto_opaque_async_resource, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoAbortAsync" "', argument " "1"" of type '" "nabto_async_resource_t""'"); 
+  }
+  arg1 = (nabto_async_resource_t)(argp1);
+  result = (nabto_status_t)nabtoAbortAsync(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoSignup(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoSignup", 2, 2, swig_obj)) SWIG_fail;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoSignup" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoSignup" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoSignup((char const *)arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoResetAccountPassword(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  PyObject *swig_obj[1] ;
+  nabto_status_t result;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  res1 = SWIG_AsCharPtrAndSize(swig_obj[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "nabtoResetAccountPassword" "', argument " "1"" of type '" "char const *""'");
+  }
+  arg1 = (char *)(buf1);
+  result = (nabto_status_t)nabtoResetAccountPassword((char const *)arg1);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return resultobj;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nabtoProbeNetwork(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  size_t arg1 ;
+  char *arg2 = (char *) 0 ;
+  size_t val1 ;
+  int ecode1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  PyObject *swig_obj[2] ;
+  nabto_status_t result;
+  
+  if (!SWIG_Python_UnpackTuple(args, "nabtoProbeNetwork", 2, 2, swig_obj)) SWIG_fail;
+  ecode1 = SWIG_AsVal_size_t(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "nabtoProbeNetwork" "', argument " "1"" of type '" "size_t""'");
+  } 
+  arg1 = (size_t)(val1);
+  res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "nabtoProbeNetwork" "', argument " "2"" of type '" "char const *""'");
+  }
+  arg2 = (char *)(buf2);
+  result = (nabto_status_t)nabtoProbeNetwork(arg1,(char const *)arg2);
+  resultobj = SWIG_From_int((int)(result));
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return resultobj;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { "SWIG_PyInstanceMethod_New", SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { "hello", _wrap_hello, METH_NOARGS, NULL},
+	 { "nabtoStartup", _wrap_nabtoStartup, METH_O, NULL},
+	 { "nabtoShutdown", _wrap_nabtoShutdown, METH_NOARGS, NULL},
+	 { "nabtoOpenSession", _wrap_nabtoOpenSession, METH_VARARGS, NULL},
+	 { "nabtoCloseSession", _wrap_nabtoCloseSession, METH_O, NULL},
+	 { "nabtoSetBasestationAuthJson", _wrap_nabtoSetBasestationAuthJson, METH_VARARGS, NULL},
+	 { "nabtoSetLocalConnectionPsk", _wrap_nabtoSetLocalConnectionPsk, METH_VARARGS, NULL},
+	 { "nabtoVersionString", _wrap_nabtoVersionString, METH_O, NULL},
+	 { "nabtoRpcSetDefaultInterface", _wrap_nabtoRpcSetDefaultInterface, METH_VARARGS, NULL},
+	 { "nabtoRpcSetInterface", _wrap_nabtoRpcSetInterface, METH_VARARGS, NULL},
+	 { "nabtoRpcInvoke", _wrap_nabtoRpcInvoke, METH_VARARGS, NULL},
+	 { "nabtoStreamOpen", _wrap_nabtoStreamOpen, METH_VARARGS, NULL},
+	 { "nabtoStreamClose", _wrap_nabtoStreamClose, METH_O, NULL},
+	 { "nabtoStreamRead", _wrap_nabtoStreamRead, METH_VARARGS, NULL},
+	 { "nabtoStreamReadIntoBuf", _wrap_nabtoStreamReadIntoBuf, METH_VARARGS, NULL},
+	 { "nabtoStreamWrite", _wrap_nabtoStreamWrite, METH_VARARGS, NULL},
+	 { "nabtoStreamConnectionType", _wrap_nabtoStreamConnectionType, METH_VARARGS, NULL},
+	 { "nabtoStreamSetOption", _wrap_nabtoStreamSetOption, METH_VARARGS, NULL},
+	 { "nabtoTunnelOpenTcp", _wrap_nabtoTunnelOpenTcp, METH_VARARGS, NULL},
+	 { "nabtoTunnelClose", _wrap_nabtoTunnelClose, METH_O, NULL},
+	 { "nabtoTunnelInfo", _wrap_nabtoTunnelInfo, METH_VARARGS, NULL},
+	 { "nabtoCreateProfile", _wrap_nabtoCreateProfile, METH_VARARGS, NULL},
+	 { "nabtoCreateSelfSignedProfile", _wrap_nabtoCreateSelfSignedProfile, METH_VARARGS, NULL},
+	 { "nabtoRemoveProfile", _wrap_nabtoRemoveProfile, METH_O, NULL},
+	 { "nabtoGetFingerprint", _wrap_nabtoGetFingerprint, METH_VARARGS, NULL},
+	 { "nabtoRegisterLogCallback", _wrap_nabtoRegisterLogCallback, METH_O, NULL},
+	 { "nabtoStatusStr", _wrap_nabtoStatusStr, METH_O, NULL},
+	 { "nabtoGetProtocolPrefixes", _wrap_nabtoGetProtocolPrefixes, METH_VARARGS, NULL},
+	 { "nabtoGetCertificates", _wrap_nabtoGetCertificates, METH_VARARGS, NULL},
+	 { "nabtoGetLocalDevices", _wrap_nabtoGetLocalDevices, METH_VARARGS, NULL},
+	 { "nabtoFree", _wrap_nabtoFree, METH_O, NULL},
+	 { "nabtoSetApplicationName", _wrap_nabtoSetApplicationName, METH_O, NULL},
+	 { "nabtoSetStaticResourceDir", _wrap_nabtoSetStaticResourceDir, METH_O, NULL},
+	 { "nabtoInstallDefaultStaticResources", _wrap_nabtoInstallDefaultStaticResources, METH_O, NULL},
+	 { "nabtoSetOption", _wrap_nabtoSetOption, METH_VARARGS, NULL},
+	 { "nabtoVersion", _wrap_nabtoVersion, METH_VARARGS, NULL},
+	 { "nabtoFetchUrl", _wrap_nabtoFetchUrl, METH_VARARGS, NULL},
+	 { "nabtoSubmitPostData", _wrap_nabtoSubmitPostData, METH_VARARGS, NULL},
+	 { "nabtoGetSessionToken", _wrap_nabtoGetSessionToken, METH_VARARGS, NULL},
+	 { "nabtoAsyncSetPostData", _wrap_nabtoAsyncSetPostData, METH_VARARGS, NULL},
+	 { "nabtoAsyncPostData", _wrap_nabtoAsyncPostData, METH_VARARGS, NULL},
+	 { "nabtoAsyncPostClose", _wrap_nabtoAsyncPostClose, METH_O, NULL},
+	 { "nabtoAsyncFetch", _wrap_nabtoAsyncFetch, METH_VARARGS, NULL},
+	 { "nabtoGetAsyncData", _wrap_nabtoGetAsyncData, METH_VARARGS, NULL},
+	 { "nabtoOpenSessionBare", _wrap_nabtoOpenSessionBare, METH_O, NULL},
+	 { "nabtoAsyncInit", _wrap_nabtoAsyncInit, METH_VARARGS, NULL},
+	 { "nabtoAsyncClose", _wrap_nabtoAsyncClose, METH_O, NULL},
+	 { "nabtoAbortAsync", _wrap_nabtoAbortAsync, METH_O, NULL},
+	 { "nabtoSignup", _wrap_nabtoSignup, METH_VARARGS, NULL},
+	 { "nabtoResetAccountPassword", _wrap_nabtoResetAccountPassword, METH_O, NULL},
+	 { "nabtoProbeNetwork", _wrap_nabtoProbeNetwork, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -2697,15 +4992,103 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_enum_nabto_async_status_p_void_p_void__void = {"_p_f_enum_nabto_async_status_p_void_p_void__void", "NabtoAsyncStatusCallbackFunc|void (*)(enum nabto_async_status,void *,void *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status = {"_p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status", "enum nabto_async_post_data_status (*)(char *,size_t,size_t *,void *)|NabtoAsyncPostDataCallbackFunc", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_q_const__char_size_t__void = {"_p_f_p_q_const__char_size_t__void", "void (*)(char const *,size_t)|NabtoLogCallbackFunc", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_async_post_data_status = {"_p_nabto_async_post_data_status", "enum nabto_async_post_data_status *|nabto_async_post_data_status_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_async_status = {"_p_nabto_async_status", "enum nabto_async_status *|nabto_async_status_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_connection_type = {"_p_nabto_connection_type", "enum nabto_connection_type *|nabto_connection_type_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_opaque_async_resource = {"_p_nabto_opaque_async_resource", "nabto_async_resource_t|struct nabto_opaque_async_resource *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_opaque_handle = {"_p_nabto_opaque_handle", "nabto_handle_t|struct nabto_opaque_handle *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_opaque_stream = {"_p_nabto_opaque_stream", "struct nabto_opaque_stream *|nabto_stream_t", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_opaque_tunnel = {"_p_nabto_opaque_tunnel", "nabto_tunnel_t|struct nabto_opaque_tunnel *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_status = {"_p_nabto_status", "enum nabto_status *|nabto_status_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_stream_option = {"_p_nabto_stream_option", "nabto_stream_option_t *|enum nabto_stream_option *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_tunnel_info_selector = {"_p_nabto_tunnel_info_selector", "nabto_tunnel_info_selector_t *|enum nabto_tunnel_info_selector *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_nabto_tunnel_state = {"_p_nabto_tunnel_state", "nabto_tunnel_state_t *|enum nabto_tunnel_state *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_nabto_opaque_async_resource = {"_p_p_nabto_opaque_async_resource", "struct nabto_opaque_async_resource **|nabto_async_resource_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_nabto_opaque_handle = {"_p_p_nabto_opaque_handle", "nabto_handle_t *|struct nabto_opaque_handle **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_nabto_opaque_stream = {"_p_p_nabto_opaque_stream", "nabto_stream_t *|struct nabto_opaque_stream **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_nabto_opaque_tunnel = {"_p_p_nabto_opaque_tunnel", "nabto_tunnel_t *|struct nabto_opaque_tunnel **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_p_char = {"_p_p_p_char", "char ***", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_size_t = {"_p_size_t", "size_t *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
+  &_swigt__p_f_enum_nabto_async_status_p_void_p_void__void,
+  &_swigt__p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status,
+  &_swigt__p_f_p_q_const__char_size_t__void,
+  &_swigt__p_int,
+  &_swigt__p_nabto_async_post_data_status,
+  &_swigt__p_nabto_async_status,
+  &_swigt__p_nabto_connection_type,
+  &_swigt__p_nabto_opaque_async_resource,
+  &_swigt__p_nabto_opaque_handle,
+  &_swigt__p_nabto_opaque_stream,
+  &_swigt__p_nabto_opaque_tunnel,
+  &_swigt__p_nabto_status,
+  &_swigt__p_nabto_stream_option,
+  &_swigt__p_nabto_tunnel_info_selector,
+  &_swigt__p_nabto_tunnel_state,
+  &_swigt__p_p_char,
+  &_swigt__p_p_nabto_opaque_async_resource,
+  &_swigt__p_p_nabto_opaque_handle,
+  &_swigt__p_p_nabto_opaque_stream,
+  &_swigt__p_p_nabto_opaque_tunnel,
+  &_swigt__p_p_p_char,
+  &_swigt__p_size_t,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_enum_nabto_async_status_p_void_p_void__void[] = {  {&_swigt__p_f_enum_nabto_async_status_p_void_p_void__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status[] = {  {&_swigt__p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_q_const__char_size_t__void[] = {  {&_swigt__p_f_p_q_const__char_size_t__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_async_post_data_status[] = {  {&_swigt__p_nabto_async_post_data_status, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_async_status[] = {  {&_swigt__p_nabto_async_status, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_connection_type[] = {  {&_swigt__p_nabto_connection_type, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_opaque_async_resource[] = {  {&_swigt__p_nabto_opaque_async_resource, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_opaque_handle[] = {  {&_swigt__p_nabto_opaque_handle, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_opaque_stream[] = {  {&_swigt__p_nabto_opaque_stream, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_opaque_tunnel[] = {  {&_swigt__p_nabto_opaque_tunnel, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_status[] = {  {&_swigt__p_nabto_status, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_stream_option[] = {  {&_swigt__p_nabto_stream_option, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_tunnel_info_selector[] = {  {&_swigt__p_nabto_tunnel_info_selector, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_nabto_tunnel_state[] = {  {&_swigt__p_nabto_tunnel_state, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_nabto_opaque_async_resource[] = {  {&_swigt__p_p_nabto_opaque_async_resource, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_nabto_opaque_handle[] = {  {&_swigt__p_p_nabto_opaque_handle, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_nabto_opaque_stream[] = {  {&_swigt__p_p_nabto_opaque_stream, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_nabto_opaque_tunnel[] = {  {&_swigt__p_p_nabto_opaque_tunnel, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_p_char[] = {  {&_swigt__p_p_p_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_size_t[] = {  {&_swigt__p_size_t, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
+  _swigc__p_f_enum_nabto_async_status_p_void_p_void__void,
+  _swigc__p_f_p_char_size_t_p_size_t_p_void__nabto_async_post_data_status,
+  _swigc__p_f_p_q_const__char_size_t__void,
+  _swigc__p_int,
+  _swigc__p_nabto_async_post_data_status,
+  _swigc__p_nabto_async_status,
+  _swigc__p_nabto_connection_type,
+  _swigc__p_nabto_opaque_async_resource,
+  _swigc__p_nabto_opaque_handle,
+  _swigc__p_nabto_opaque_stream,
+  _swigc__p_nabto_opaque_tunnel,
+  _swigc__p_nabto_status,
+  _swigc__p_nabto_stream_option,
+  _swigc__p_nabto_tunnel_info_selector,
+  _swigc__p_nabto_tunnel_state,
+  _swigc__p_p_char,
+  _swigc__p_p_nabto_opaque_async_resource,
+  _swigc__p_p_nabto_opaque_handle,
+  _swigc__p_p_nabto_opaque_stream,
+  _swigc__p_p_nabto_opaque_tunnel,
+  _swigc__p_p_p_char,
+  _swigc__p_size_t,
 };
 
 
@@ -3435,6 +5818,58 @@ SWIG_init(void) {
   
   SWIG_InstallConstants(d,swig_const_table);
   
+  SWIG_Python_SetConstant(d, "NABTO_OK",SWIG_From_int((int)(NABTO_OK)));
+  SWIG_Python_SetConstant(d, "NABTO_NO_PROFILE",SWIG_From_int((int)(NABTO_NO_PROFILE)));
+  SWIG_Python_SetConstant(d, "NABTO_ERROR_READING_CONFIG",SWIG_From_int((int)(NABTO_ERROR_READING_CONFIG)));
+  SWIG_Python_SetConstant(d, "NABTO_API_NOT_INITIALIZED",SWIG_From_int((int)(NABTO_API_NOT_INITIALIZED)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_SESSION",SWIG_From_int((int)(NABTO_INVALID_SESSION)));
+  SWIG_Python_SetConstant(d, "NABTO_OPEN_CERT_OR_PK_FAILED",SWIG_From_int((int)(NABTO_OPEN_CERT_OR_PK_FAILED)));
+  SWIG_Python_SetConstant(d, "NABTO_UNLOCK_PK_FAILED",SWIG_From_int((int)(NABTO_UNLOCK_PK_FAILED)));
+  SWIG_Python_SetConstant(d, "NABTO_PORTAL_LOGIN_FAILURE",SWIG_From_int((int)(NABTO_PORTAL_LOGIN_FAILURE)));
+  SWIG_Python_SetConstant(d, "NABTO_CERT_SIGNING_ERROR",SWIG_From_int((int)(NABTO_CERT_SIGNING_ERROR)));
+  SWIG_Python_SetConstant(d, "NABTO_CERT_SAVING_FAILURE",SWIG_From_int((int)(NABTO_CERT_SAVING_FAILURE)));
+  SWIG_Python_SetConstant(d, "NABTO_ADDRESS_IN_USE",SWIG_From_int((int)(NABTO_ADDRESS_IN_USE)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_ADDRESS",SWIG_From_int((int)(NABTO_INVALID_ADDRESS)));
+  SWIG_Python_SetConstant(d, "NABTO_NO_NETWORK",SWIG_From_int((int)(NABTO_NO_NETWORK)));
+  SWIG_Python_SetConstant(d, "NABTO_CONNECT_TO_HOST_FAILED",SWIG_From_int((int)(NABTO_CONNECT_TO_HOST_FAILED)));
+  SWIG_Python_SetConstant(d, "NABTO_STREAMING_UNSUPPORTED",SWIG_From_int((int)(NABTO_STREAMING_UNSUPPORTED)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_STREAM",SWIG_From_int((int)(NABTO_INVALID_STREAM)));
+  SWIG_Python_SetConstant(d, "NABTO_DATA_PENDING",SWIG_From_int((int)(NABTO_DATA_PENDING)));
+  SWIG_Python_SetConstant(d, "NABTO_BUFFER_FULL",SWIG_From_int((int)(NABTO_BUFFER_FULL)));
+  SWIG_Python_SetConstant(d, "NABTO_FAILED",SWIG_From_int((int)(NABTO_FAILED)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_TUNNEL",SWIG_From_int((int)(NABTO_INVALID_TUNNEL)));
+  SWIG_Python_SetConstant(d, "NABTO_ILLEGAL_PARAMETER",SWIG_From_int((int)(NABTO_ILLEGAL_PARAMETER)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_RESOURCE",SWIG_From_int((int)(NABTO_INVALID_RESOURCE)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_STREAM_OPTION",SWIG_From_int((int)(NABTO_INVALID_STREAM_OPTION)));
+  SWIG_Python_SetConstant(d, "NABTO_INVALID_STREAM_OPTION_ARGUMENT",SWIG_From_int((int)(NABTO_INVALID_STREAM_OPTION_ARGUMENT)));
+  SWIG_Python_SetConstant(d, "NABTO_ABORTED",SWIG_From_int((int)(NABTO_ABORTED)));
+  SWIG_Python_SetConstant(d, "NABTO_STREAM_CLOSED",SWIG_From_int((int)(NABTO_STREAM_CLOSED)));
+  SWIG_Python_SetConstant(d, "NABTO_FAILED_WITH_JSON_MESSAGE",SWIG_From_int((int)(NABTO_FAILED_WITH_JSON_MESSAGE)));
+  SWIG_Python_SetConstant(d, "NABTO_ERROR_CODE_COUNT",SWIG_From_int((int)(NABTO_ERROR_CODE_COUNT)));
+  SWIG_Python_SetConstant(d, "NCT_LOCAL",SWIG_From_int((int)(NCT_LOCAL)));
+  SWIG_Python_SetConstant(d, "NCT_P2P",SWIG_From_int((int)(NCT_P2P)));
+  SWIG_Python_SetConstant(d, "NCT_RELAY",SWIG_From_int((int)(NCT_RELAY)));
+  SWIG_Python_SetConstant(d, "NCT_UNKNOWN",SWIG_From_int((int)(NCT_UNKNOWN)));
+  SWIG_Python_SetConstant(d, "NCT_RELAY_MICRO",SWIG_From_int((int)(NCT_RELAY_MICRO)));
+  SWIG_Python_SetConstant(d, "NSO_RCVTIMEO",SWIG_From_int((int)(NSO_RCVTIMEO)));
+  SWIG_Python_SetConstant(d, "NSO_SNDTIMEO",SWIG_From_int((int)(NSO_SNDTIMEO)));
+  SWIG_Python_SetConstant(d, "NTI_VERSION",SWIG_From_int((int)(NTI_VERSION)));
+  SWIG_Python_SetConstant(d, "NTI_STATUS",SWIG_From_int((int)(NTI_STATUS)));
+  SWIG_Python_SetConstant(d, "NTI_LAST_ERROR",SWIG_From_int((int)(NTI_LAST_ERROR)));
+  SWIG_Python_SetConstant(d, "NTI_PORT",SWIG_From_int((int)(NTI_PORT)));
+  SWIG_Python_SetConstant(d, "NTCS_CLOSED",SWIG_From_int((int)(NTCS_CLOSED)));
+  SWIG_Python_SetConstant(d, "NTCS_CONNECTING",SWIG_From_int((int)(NTCS_CONNECTING)));
+  SWIG_Python_SetConstant(d, "NTCS_READY_FOR_RECONNECT",SWIG_From_int((int)(NTCS_READY_FOR_RECONNECT)));
+  SWIG_Python_SetConstant(d, "NTCS_UNKNOWN",SWIG_From_int((int)(NTCS_UNKNOWN)));
+  SWIG_Python_SetConstant(d, "NTCS_LOCAL",SWIG_From_int((int)(NTCS_LOCAL)));
+  SWIG_Python_SetConstant(d, "NTCS_REMOTE_P2P",SWIG_From_int((int)(NTCS_REMOTE_P2P)));
+  SWIG_Python_SetConstant(d, "NTCS_REMOTE_RELAY",SWIG_From_int((int)(NTCS_REMOTE_RELAY)));
+  SWIG_Python_SetConstant(d, "NTCS_REMOTE_RELAY_MICRO",SWIG_From_int((int)(NTCS_REMOTE_RELAY_MICRO)));
+  SWIG_Python_SetConstant(d, "NAPDS_OK",SWIG_From_int((int)(NAPDS_OK)));
+  SWIG_Python_SetConstant(d, "NAPDS_CLOSED",SWIG_From_int((int)(NAPDS_CLOSED)));
+  SWIG_Python_SetConstant(d, "NAS_MIMETYPE_AVAILABLE",SWIG_From_int((int)(NAS_MIMETYPE_AVAILABLE)));
+  SWIG_Python_SetConstant(d, "NAS_CHUNK_READY",SWIG_From_int((int)(NAS_CHUNK_READY)));
+  SWIG_Python_SetConstant(d, "NAS_CLOSED",SWIG_From_int((int)(NAS_CLOSED)));
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

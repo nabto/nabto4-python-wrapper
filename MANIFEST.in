@@ -1,2 +1,4 @@
-include inc/*.h
-include src/*.c
+include extension/inc/example.h
+include extension/linux64/include/nabto_client_api.h
+include extension/linux64/lib/libnabto_client_api_static.a
+include extension/linux64/lib/libnabto_static_external.a

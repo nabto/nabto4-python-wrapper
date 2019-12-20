@@ -23,8 +23,10 @@ nabto_api = Extension(
         'nabto_client/nabto_client.i',
         'extension/src/example.c', 
     ],
+    swig_opts=['-c++'],
     include_dirs=['extension/inc/'],
-    
+    library_dirs=['extension/linux64/lib/'],
+    libraries=['nabto_client_api_static', 'nabto_static_external'],
 )
 
 setup(
@@ -36,4 +38,11 @@ setup(
     author_email='alexandru.gandrabur@tremend.com',
     description="""Nabto Client Wrapper for Python""",
     ext_modules=[nabto_api],
+    classifiers=[
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+    ],
 )
