@@ -4,17 +4,14 @@ from memory_profiler import profile
 
 @profile
 def nabto_stuff():
-    ok = nabto_api.nabto_startup("/home/alex/work/nabto/python-nabto-client/example")
+    ok = nabto_api.nabto_startup("/home/alex/work/nabto/python-nabto-client/example/share/nabto")
     if ok == nabto_api.Status.NABTO_OK:
         print("Successful startup")
     else:
         print("Startup failed")
 
-    session = nabto_api.SessionWrapper()
-    ok = session.open_session("cloud", "password")
-    if ok == nabto_api.Status.NABTO_OK:
-        print("Session opened")
-    else:
-        print("Error opening session:", ok)
+    nabto_api.nabto_create_self_signed_profile("alex", "mypassword")
+    session = nabto_client.NabtoSession()
+    session.openSession("alex", "mypassword")
     
 nabto_stuff()

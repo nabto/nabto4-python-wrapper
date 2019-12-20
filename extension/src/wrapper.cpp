@@ -85,3 +85,8 @@ error SessionWrapper::rpc_invoke(std::string url) {
     nabtoFree(response);
     return result;
 }
+
+//----Query----
+const char* nabto_status_str(int status) {
+    return nabtoStatusStr(nabto_status_t(status));
+}

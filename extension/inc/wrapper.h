@@ -36,4 +36,7 @@ int nabto_create_self_signed_profile(std::string id, std::string password);
 int nabto_remove_profile(std::string id);
 error nabto_get_fingerprint(std::string id);
 
+//----Query----
+const char* nabto_status_str(int status);
+
 #endif
