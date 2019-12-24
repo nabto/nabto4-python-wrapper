@@ -12,7 +12,8 @@ def nabto_stuff():
 
     nabto_api.nabto_create_self_signed_profile("alex", "mypassword")
 
-    with nabto_client.NabtoSession("alex", "mypassword") as session:
-        print('Opened session')
+    with nabto_client.NabtoSession("alex", "mypassword") as session, \
+            nabto_client.NabtoTunnel(session, 0, 'sdktnens.ru4bi.appmyproduct.com', 'localhost', 6001) as port:
+        print(f'Opened tunnel on port {port}')
 
 nabto_stuff()
