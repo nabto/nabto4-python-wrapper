@@ -1,5 +1,15 @@
-import nabto_client.nabto_api as api
+from nabto_client import nabto_api as api
 from nabto_client.exception import check_status, check_result
+
+
+@check_status
+def startup(home_dir: str):
+    return api.nabto_startup(home_dir)
+
+
+@check_status
+def shutdown():
+    return api.nabto_shutdown()
 
 
 class NabtoSession:
