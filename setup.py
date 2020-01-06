@@ -25,6 +25,15 @@ class build_ext_first(_build_py):
         _build_py.run(self)
         self.move_extension_to_package()
 
+os_type = ""
+if sys.platform == "linux":
+    os_type = "linux64"
+elif sys.platform == "win32":
+    os_type = "win32"
+elif sys.platform == "win64":
+    os_type = "win64"
+elif sys.platform == "darwin":
+    os_type = "mac64"
 
 nabto_api = Extension(
     '_nabto_api',
@@ -33,8 +42,8 @@ nabto_api = Extension(
         'extension/src/wrapper.cpp', 
     ],
     swig_opts=['-c++'],
-    include_dirs=['extension/inc/', 'extension/linux64/include/'],
-    library_dirs=['extension/linux64/lib/'],
+    include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
+    library_dirs=['extension/{0}/lib/'.format(os_type)],
     libraries=['nabto_client_api_static', 'nabto_static_external'],
 )
 
