@@ -38,8 +38,8 @@ elif sys.platform == "darwin":
 nabto_api = Extension(
     '_nabto_api',
     sources=[
-        'nabto_client/nabto_client.i',
-        'extension/src/wrapper.cpp', 
+        'extension/src/wrapper.cpp',
+        'nabto_client/nabto_client_wrap.cpp' 
     ],
     swig_opts=['-c++'],
     include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
