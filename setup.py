@@ -46,6 +46,13 @@ nabto_api = Extension(
     libraries=['nabto_client_api_static', 'nabto_static_external'],
 )
 
+nabto_cpython = Extension(
+    'nabto',
+    sources=[
+        'extension/src/nabto.c'
+    ]
+)
+
 if sys.argv[-1] == 'publish':
     if os.system("make check-swig"):
         print("swig not installed.\nUse `apt install swig`.\nExiting.")
@@ -77,7 +84,7 @@ setup(
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     python_requires=">=3.6",
-    ext_modules=[nabto_api],
+    ext_modules=[nabto_api, nabto_cpython],
     classifiers=[
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
