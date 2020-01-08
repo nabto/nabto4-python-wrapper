@@ -5,7 +5,7 @@ Python Wrapper for Nabto Client
 ## Requirements
 
 * Python 3.6+
-* Swig
+* `python3-dev` package for Debian distributions
 
 ## Installation
 

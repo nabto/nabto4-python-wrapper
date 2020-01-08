@@ -1,11 +1,10 @@
 import glob
 import os
-import shutil
 import sys
 from setuptools import setup, Extension
 from setuptools.command.build_py import build_py as _build_py
 
-VERSION = '0.1.5'
+VERSION = '0.1.9'
 
 
 def read(f):
@@ -48,19 +47,23 @@ nabto_api = Extension(
 )
 
 if sys.argv[-1] == 'publish':
-    if os.system("pip freeze | grep twine"):
+    if os.system("make check-swig"):
+        print("swig not installed.\nUse `apt install swig`.\nExiting.")
+        sys.exit()
+
+    if os.system("make check-twine"):
         print("twine not installed.\nUse `pip install twine`.\nExiting.")
         sys.exit()
-    os.system("python setup.py sdist")
-    if os.system("twine check dist/*"):
+
+    os.system("make swig")
+    os.system("make build")
+
+    if os.system("make check-dist"):
         print("twine check failed. Packages might be outdated.")
         sys.exit()
-    os.system("twine upload -r testpypi dist/*")
-    # print("You probably want to also tag the version now:")
-    # print("  git tag -a %s -m 'version %s'" % (VERSION, VERSION))
-    # print("  git push --tags")
-    shutil.rmtree('dist')
-    shutil.rmtree('nabto_client.egg-info')
+
+    os.system("make upload")
+    os.system("make clean")
     sys.exit()
 
 setup(

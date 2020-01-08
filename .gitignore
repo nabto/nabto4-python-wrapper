@@ -5,3 +5,6 @@ dist
 .vscode
 .idea
 example/share
+nabto_client/nabto_api.py
+nabto_client/nabto_client_wrap.cpp
+nabto_client.egg-info
