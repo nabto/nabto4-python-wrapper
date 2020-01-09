@@ -15,6 +15,7 @@ typedef struct {
     nabto_tunnel_t tunnel;
 } TunnelObject;
 
+// Session
 static PyObject* py_nabtoStartup(PyObject* self, PyObject *args);
 static PyObject* py_nabtoShutdown(PyObject* self, PyObject *args);
 static PyObject* py_nabtoVersionString(PyObject* self, PyObject *args);
@@ -23,19 +24,39 @@ static PyObject* Session_open(SessionObject* self, PyObject *args);
 static PyObject* Session_close(SessionObject* self, PyObject *Py_UNUSED(ignored));
 static PyObject* Session_rpcSetDefaultInterface(SessionObject* self, PyObject *args);
 static PyObject* Session_rpcInvoke(SessionObject* self, PyObject *args);
+// Tunnel
 static void      Tunnel_dealloc(TunnelObject *self);
 static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args);
 static PyObject* Tunnel_close(TunnelObject* self, PyObject* args);
+// Profile
+static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args);
+static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args);
+static PyObject* py_nabtoGetFingerprint(PyObject* self, PyObject *args);
 
 static PyMethodDef NabtoMethods[] = {
     {
-        "nabtoStartup", py_nabtoStartup, METH_VARARGS, "Initializes the Nabto client API"
+        "nabtoStartup", py_nabtoStartup, METH_VARARGS,
+        "Initializes the Nabto client API"
     },
     {
-        "nabtoShutdown", py_nabtoShutdown, METH_NOARGS, "Terminates the Nabto client API"
+        "nabtoShutdown", py_nabtoShutdown, METH_NOARGS,
+        "Terminates the Nabto client API"
     },
     {
-        "nabtoVersionString", py_nabtoVersionString, METH_NOARGS, "Get the underlying C libs Nabto software version (major.minor.patch[-prerelease tag]+build)"
+        "nabtoVersionString", py_nabtoVersionString, METH_NOARGS,
+        "Get the underlying C libs Nabto software version (major.minor.patch[-prerelease tag]+build)"
+    },
+    {
+        "nabtoCreateProfile", py_nabtoCreateSelfSignedProfile, METH_VARARGS,
+        "Creates a Nabto self signed profile. The identity of such certificate cannot be trusted but the fingerprint of the certificate can be trusted in the device. After the profile has been created it can be used in the open session function."
+    },
+    {
+        "nabtoRemoveProfile", py_nabtoRemoveProfile, METH_VARARGS,
+        "Remove profile certificate for given id."
+    },
+    {
+        "nabtoGetFingerprint", py_nabtoGetFingerprint, METH_VARARGS,
+        "Retrieve public key fingerprint for profile with specified id."
     },
     {
         NULL, NULL, 0, NULL
@@ -333,4 +354,57 @@ static PyObject* Tunnel_close(TunnelObject* self, PyObject* args) {
     }
 
     Py_RETURN_NONE;
+}
+
+static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args) {
+    printf("nabtoCreateSelfSignedProfile\n");
+    char* id = NULL;
+    char* password = NULL;
+    if (!PyArg_ParseTuple(args, "ss", &id, &password)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoCreateSelfSignedProfile(id, password);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args) {
+    printf("nabtoRemoveProfile\n");
+    char* id = NULL;
+    if (!PyArg_ParseTuple(args, "s", &id)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoRemoveProfile(id);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* py_nabtoGetFingerprint(PyObject* self, PyObject *args) {
+    printf("nabtoGetFingerprint\n");
+    char* id = NULL;
+    char fingerprint[16];
+    if (!PyArg_ParseTuple(args, "s", &id)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoGetFingerprint(id, fingerprint);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+    char fp[33] = {'\0'};
+    const char* table = "0123456789abcdef";
+    for(int i = 0; i < 16; i++) {
+        fp[2 * i] = table[(fingerprint[i] >> 4)];
+        fp[2 * i + 1] = table[fingerprint[i] & 0x0f];
+    }
+
+    return PyUnicode_FromString(fp);
 }
