@@ -123,6 +123,10 @@ static PyObject* Session_rpcInvoke(SessionObject* self, PyObject *args) {
     PyObject* result = PyUnicode_FromString(response);
     nabtoFree(response);
     if (st != NABTO_OK) {
+        if (st == NABTO_FAILED_WITH_JSON_MESSAGE) {
+            PyErr_SetObject(NabtoError, result);
+            return NULL;
+        }
         PyErr_SetString(NabtoError, nabtoStatusStr(st));
         return NULL;
     }
