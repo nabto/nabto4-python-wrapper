@@ -47,7 +47,7 @@ static PyMethodDef NabtoMethods[] = {
         "Get the underlying C libs Nabto software version (major.minor.patch[-prerelease tag]+build)"
     },
     {
-        "nabtoCreateProfile", py_nabtoCreateSelfSignedProfile, METH_VARARGS,
+        "nabtoCreateSelfSignedProfile", py_nabtoCreateSelfSignedProfile, METH_VARARGS,
         "Creates a Nabto self signed profile. The identity of such certificate cannot be trusted but the fingerprint of the certificate can be trusted in the device. After the profile has been created it can be used in the open session function."
     },
     {
