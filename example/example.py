@@ -50,8 +50,8 @@ REMOTE_PORT = 8090
 
 def nabto_stuff():
     nabto_client.startup(NABTO_HOME_DIRECTORY)
-    # nabto_client.NabtoProfile.createSelfSignedProfile(USER, PASSWORD)
-    print(nabto_client.NabtoProfile.getFingerprint("alex"))
+    # nabto_client.createSelfSignedProfile(USER, PASSWORD)
+    print(nabto_client.getFingerprint("alex"))
 
     with nabto_client.NabtoSession(USER, PASSWORD) as session:
         with open(NABTO_QUERIES) as file:
