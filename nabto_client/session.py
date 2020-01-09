@@ -8,6 +8,9 @@ def startup(home_dir: str):
 def shutdown():
     return nabto.nabtoShutdown()
 
+def versionString():
+    return nabto.nabtoVersionString()
+
 
 class NabtoSession:
     def __init__(self, user: str, password: str):
