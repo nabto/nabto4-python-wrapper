@@ -1,13 +1,60 @@
-import os, time
+import os, time, json
+import urllib.parse
 from nabto_client import nabto
 
 PARENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 NABTO_HOME_DIRECTORY = os.path.join(PARENT_DIRECTORY, 'share', 'nabto')
+NABTO_QUERIES = os.path.join(PARENT_DIRECTORY, 'unabto_queries.xml')
 
-nabto.nabtoStartup(NABTO_HOME_DIRECTORY)
-print(nabto.nabtoVersionString())
-s = nabto.Session()
-s.open("alex", "mypassword")
-time.sleep(5)
-s.close()
-nabto.nabtoShutdown()
+class NabtoDevice:
+    deviceID: str 
+    session: nabto.Session = None
+
+    def __init__(self, id: str, session: nabto.Session):
+        self.deviceID = id
+        self.session = session
+
+    def rpcInvoke(self, f: str, args: dict):
+        if args:
+            params = urllib.parse.urlencode(args)
+            return self.session.rpcInvoke(f"nabto://{self.deviceID}/{f}?{params}")
+
+        return self.session.rpcInvoke(f"nabto://{self.deviceID}/{f}")
+
+    def addUser(self, user, fingerprint):
+        resp = self.rpcInvoke("add_user.json", {"name": user, "fingerprint": fingerprint})
+        return json.loads(resp)["response"]
+
+    def getUsers(self) -> list:
+        resp = self.rpcInvoke("get_users.json", {"start": 0, "count": 10})
+        return json.loads(resp)["response"]["users"]
+
+    def pairWithDevice(self, name: str):
+        resp = self.rpcInvoke("pair_with_device.json", {"name": name})
+        return json.loads(resp)["response"]
+
+USER = "alex"
+PASSWORD = "mypassword"
+
+LOCAL_PORT = 7000
+NABTO_HOST = "jkkecnxk.rxxbkt.trial.nabto.net"
+REMOTE_HOST = "localhost"
+REMOTE_PORT = 8090
+
+
+def main():
+    nabto.nabtoStartup(NABTO_HOME_DIRECTORY)
+    print(nabto.nabtoVersionString())
+    session = nabto.Session()
+    session.open(USER, PASSWORD)
+    with open(NABTO_QUERIES) as file:
+        session.rpcSetDefaultInterface(file.read())
+        dev = NabtoDevice(NABTO_HOST, session)
+        print(dev.getUsers())
+    time.sleep(5)
+    session.close()
+    nabto.nabtoShutdown()
+
+
+if __name__ == "__main__":
+    main()

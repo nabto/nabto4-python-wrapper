@@ -92,6 +92,42 @@ static PyObject* Session_close(SessionObject* self, PyObject *Py_UNUSED(ignored)
     Py_RETURN_NONE;
 }
 
+static PyObject* Session_rpcSetDefaultInterface(SessionObject* self, PyObject *args) {
+    printf("Session.rpcSetDefaultInterface\n");
+    char* interfaceDefinition = NULL;
+    char* err = NULL;
+    if (!PyArg_ParseTuple(args, "s", &interfaceDefinition)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoRpcSetDefaultInterface(self->session, interfaceDefinition, &err);
+    if (st != NABTO_OK) {
+        if (st == NABTO_FAILED_WITH_JSON_MESSAGE) {
+            PyErr_SetString(NabtoError, err);
+            nabtoFree(err);
+            return NULL;
+        }
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+    Py_RETURN_NONE;
+}
+
+static PyObject* Session_rpcInvoke(SessionObject* self, PyObject *args) {
+    printf("Session.rpcInvoke\n");
+    char* url = NULL;
+    char* response = NULL;
+    if (!PyArg_ParseTuple(args, "s", &url)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoRpcInvoke(self->session, url, &response);
+    PyObject* result = PyUnicode_FromString(response);
+    nabtoFree(response);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+    return result;
+}
 
 static PyMethodDef NabtoMethods[] = {
     {
@@ -116,6 +152,14 @@ static PyMethodDef SessionMethods[] = {
     {
         "close", (PyCFunction) Session_close, METH_VARARGS,
         "Closes the specified Nabto session and frees internal ressources."
+    },
+    {
+        "rpcSetDefaultInterface", (PyCFunction) Session_rpcSetDefaultInterface, METH_VARARGS,
+        "Sets the default RPC interface to use when later invoking Session.rpcInvoke()."
+    },
+    {
+        "rpcInvoke", (PyCFunction) Session_rpcInvoke, METH_VARARGS,
+        "Retrieves data synchronously from specified nabto:// URL on specified session"
     },
     {
         NULL, NULL, 0, NULL
