@@ -36,7 +36,7 @@ class NabtoDevice:
 USER = "alex"
 PASSWORD = "mypassword"
 
-LOCAL_PORT = 7000
+LOCAL_PORT = 18090
 NABTO_HOST = "jkkecnxk.rxxbkt.trial.nabto.net"
 REMOTE_HOST = "localhost"
 REMOTE_PORT = 8090
@@ -51,7 +51,12 @@ def main():
         session.rpcSetDefaultInterface(file.read())
         dev = NabtoDevice(NABTO_HOST, session)
         print(dev.getUsers())
-    time.sleep(5)
+    
+    tunnel = nabto.Tunnel()
+    port = tunnel.openTcp(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT)
+    print(f"Opened tunnel on port {port}")
+    time.sleep(30)
+    tunnel.close()
     session.close()
     nabto.nabtoShutdown()
 
