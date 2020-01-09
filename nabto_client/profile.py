@@ -1,24 +1,14 @@
-from nabto_client import nabto_api as api
-from nabto_client.exception import check_status, check_result
-
+import nabto_client.nabto as nabto
 
 class NabtoProfile:
     @staticmethod
-    @check_status
-    def createProfile(email: str, password: str):
-        return api.nabto_create_profile(email, password)
-
-    @staticmethod
-    @check_status
     def createSelfSignedProfile(id: str, password: str):
-        return api.nabto_create_self_signed_profile(id, password)
+        return nabto.nabtoCreateSelfSignedProfile(id, password)
 
     @staticmethod
-    @check_status
     def removeProfile(id: str):
-        return api.nabto_remove_profile(id)
+        return nabto.nabtoRemoveProfile(id)
 
     @staticmethod
-    @check_result
     def getFingerprint(id: str):
-        return api.nabto_get_fingerprint(id)
+        return nabto.nabtoGetFingerprint(id)

@@ -1,44 +1,37 @@
-from nabto_client import nabto_api as api
-from nabto_client.exception import check_status, check_result
+import nabto_client.nabto as nabto
 
 
-@check_status
 def startup(home_dir: str):
-    return api.nabto_startup(home_dir)
+    return nabto.nabtoStartup(home_dir)
 
 
-@check_status
 def shutdown():
-    return api.nabto_shutdown()
+    return nabto.nabtoShutdown()
 
 
 class NabtoSession:
     def __init__(self, user: str, password: str):
         self.user = user
         self.password = password
-        self.session = api.SessionWrapper()
+        self.session = nabto.Session()
 
     def __enter__(self):
-        self.openSession()
+        self.open()
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.closeSession()
+        self.close()
         self.session = None
 
-    @check_status
-    def openSession(self):
-        return self.session.open_session(self.user, self.password)
+    def open(self):
+        return self.session.open(self.user, self.password)
 
-    @check_status
-    def closeSession(self):
-        return self.session.close_session()
+    def close(self):
+        return self.session.close()
 
-    @check_result
     def RpcSetDefaultInterface(self, interface: str):
-        return self.session.rpc_set_default_interface(interface)
+        return self.session.rpcSetDefaultInterface(interface)
 
-    @check_result
     def RpcInvoke(self, url: str):
-        return self.session.rpc_invoke(url)
+        return self.session.rpcInvoke(url)

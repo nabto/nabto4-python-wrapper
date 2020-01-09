@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_py import build_py as _build_py
 
-VERSION = '0.1.9'
+VERSION = '0.2.0'
 
 
 def read(f):
@@ -34,37 +34,21 @@ elif sys.platform == "win64":
 elif sys.platform == "darwin":
     os_type = "mac64"
 
-nabto_api = Extension(
-    '_nabto_api',
-    sources=[
-        'extension/src/wrapper.cpp',
-        'nabto_client/nabto_client_wrap.cpp' 
-    ],
-    include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
-    library_dirs=['extension/{0}/lib/'.format(os_type)],
-    libraries=['nabto_client_api_static', 'nabto_static_external'],
-)
-
 nabto_cpython = Extension(
     'nabto',
     sources=[
         'extension/src/nabto.c'
     ],
-    include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
+    include_dirs=['extension/{0}/include/'.format(os_type)],
     library_dirs=['extension/{0}/lib/'.format(os_type)],
     libraries=['nabto_client_api_static', 'nabto_static_external', 'stdc++'],
 )
 
 if sys.argv[-1] == 'publish':
-    if os.system("make check-swig"):
-        print("swig not installed.\nUse `apt install swig`.\nExiting.")
-        sys.exit()
-
     if os.system("make check-twine"):
         print("twine not installed.\nUse `pip install twine`.\nExiting.")
         sys.exit()
 
-    os.system("make swig")
     os.system("make build")
 
     if os.system("make check-dist"):
@@ -83,10 +67,11 @@ setup(
     author='Alexandru Gandrabur',
     author_email='alexandru.gandrabur@tremend.com',
     description="""Nabto Client Wrapper for Python""",
+    url='https://www.nabto.com/developer',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     python_requires=">=3.6",
-    ext_modules=[nabto_api, nabto_cpython],
+    ext_modules=[nabto_cpython],
     classifiers=[
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

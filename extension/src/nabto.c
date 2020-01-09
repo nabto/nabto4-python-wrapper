@@ -402,8 +402,8 @@ static PyObject* py_nabtoGetFingerprint(PyObject* self, PyObject *args) {
     char fp[33] = {'\0'};
     const char* table = "0123456789abcdef";
     for(int i = 0; i < 16; i++) {
-        fp[2 * i] = table[(fingerprint[i] >> 4)];
-        fp[2 * i + 1] = table[fingerprint[i] & 0x0f];
+        fp[2 * i] = table[(unsigned char)(fingerprint[i]) >> 4];
+        fp[2 * i + 1] = table[(unsigned char)(fingerprint[i] & 0x0f)];
     }
 
     return PyUnicode_FromString(fp);

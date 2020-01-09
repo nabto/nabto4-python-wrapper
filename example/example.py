@@ -50,13 +50,17 @@ REMOTE_PORT = 8090
 
 def nabto_stuff():
     nabto_client.startup(NABTO_HOME_DIRECTORY)
-    nabto_client.NabtoProfile.createSelfSignedProfile(USER, PASSWORD)
+    # nabto_client.NabtoProfile.createSelfSignedProfile(USER, PASSWORD)
+    print(nabto_client.NabtoProfile.getFingerprint("alex"))
 
     with nabto_client.NabtoSession(USER, PASSWORD) as session:
         with open(NABTO_QUERIES) as file:
             session.RpcSetDefaultInterface(file.read())
             dev = NabtoDevice(NABTO_HOST, session)
-            print(dev.pairWithDevice(USER))
+            dev.addUser("cristi", "34e0834b008f0ee3748de75ecee71802")
+            # print(dev.pairWithDevice(USER))
+            print(dev.getUsers())
+            return
 
         with nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, 8090) as port:
             print(f'Opened tunnel on port {port}')
