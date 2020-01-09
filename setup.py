@@ -40,7 +40,6 @@ nabto_api = Extension(
         'extension/src/wrapper.cpp',
         'nabto_client/nabto_client_wrap.cpp' 
     ],
-    swig_opts=['-c++'],
     include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
     library_dirs=['extension/{0}/lib/'.format(os_type)],
     libraries=['nabto_client_api_static', 'nabto_static_external'],
@@ -50,7 +49,10 @@ nabto_cpython = Extension(
     'nabto',
     sources=[
         'extension/src/nabto.c'
-    ]
+    ],
+    include_dirs=['extension/inc/', 'extension/{0}/include/'.format(os_type)],
+    library_dirs=['extension/{0}/lib/'.format(os_type)],
+    libraries=['nabto_client_api_static', 'nabto_static_external', 'stdc++'],
 )
 
 if sys.argv[-1] == 'publish':
