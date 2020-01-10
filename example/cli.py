@@ -1,5 +1,5 @@
+import argparse
 import os
-import sys
 from cmd import Cmd
 from time import sleep
 
@@ -104,7 +104,13 @@ class NabtoCmd(Cmd):
 
 
 if __name__ == '__main__':
-    nabto_client.startup(NABTO_HOME_DIRECTORY)
-    assert len(sys.argv) == 2, 'Please specify the device name'
-    NabtoCmd(sys.argv[-1]).cmdloop()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--device', type=str, required=True, help='Remote host')
+    parser.add_argument('--home-dir', type=str, dest='home_dir', default=NABTO_HOME_DIRECTORY, help='Nabto home directory')
+    args = parser.parse_args()
+    print(f'Device: {args.device}')
+    print(f'Nabto home directory: {args.home_dir}')
+
+    nabto_client.startup(args.home_dir)
+    NabtoCmd(args.device).cmdloop()
     nabto_client.shutdown()
