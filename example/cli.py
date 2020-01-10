@@ -32,9 +32,9 @@ class NabtoCmd(Cmd):
         print("Bye")
         return True
 
-    def do_create_profile(self, args):
+    def do_create_self_signed_profile(self, args):
         """
-        E.g. > create_profile user pass
+        E.g. > create_self_signed_profile user pass
         """
         user, password = args.split()
         nabto_client.createSelfSignedProfile(user, password)
@@ -56,6 +56,21 @@ class NabtoCmd(Cmd):
 
         self.user = user
         self.password = password
+
+    def do_pair(self, args):
+        """
+        E.g. > pair user
+        """
+        if not self.user:
+            print('You must call `create_session` first')
+            return
+
+        with nabto_client.NabtoSession(self.user, self.password) as session:
+            with open(NABTO_QUERIES) as file:
+                session.RpcSetDefaultInterface(file.read())
+
+            dev = NabtoDevice(self.device_name, session)
+            print(dev.pairWithDevice(args))
 
     def do_open_tunnel(self, remote_port):
         """
@@ -85,8 +100,9 @@ class NabtoCmd(Cmd):
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
                 session.RpcSetDefaultInterface(file.read())
-                dev = NabtoDevice(self.device_name, session)
-                print(dev.addUser(user, fingerprint))
+
+            dev = NabtoDevice(self.device_name, session)
+            print(dev.addUser(user, fingerprint))
 
     def do_get_users(self, args):
         """
@@ -99,8 +115,9 @@ class NabtoCmd(Cmd):
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
                 session.RpcSetDefaultInterface(file.read())
-                dev = NabtoDevice(self.device_name, session)
-                print(dev.getUsers())
+
+            dev = NabtoDevice(self.device_name, session)
+            print(dev.getUsers())
 
 
 if __name__ == '__main__':
