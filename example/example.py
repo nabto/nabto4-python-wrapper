@@ -68,4 +68,5 @@ def nabto_stuff():
     nabto_client.shutdown()
 
 
-nabto_stuff()
+if __name__ == '__main__':
+    nabto_stuff()
