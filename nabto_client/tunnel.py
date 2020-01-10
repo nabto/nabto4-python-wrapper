@@ -22,3 +22,16 @@ class NabtoTunnel:
 
     def close(self):
         return self.tunnel.close()
+
+    def status(self):
+        return self.tunnel.status()
+
+class TunnelStatus:
+    CLOSED              = -1
+    CONNECTING          = 0
+    READY_FOR_RECONNECT = 1
+    UNKNOWN             = 2
+    LOCAL               = 3
+    REMOTE_P2P          = 4
+    REMOTE_RELAY        = 5
+    REMOTE_RELAY_MICRO  = 6 

@@ -28,6 +28,7 @@ static PyObject* Session_rpcInvoke(SessionObject* self, PyObject *args);
 static void      Tunnel_dealloc(TunnelObject *self);
 static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args);
 static PyObject* Tunnel_close(TunnelObject* self, PyObject* args);
+static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored));
 // Profile
 static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args);
 static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args);
@@ -92,7 +93,11 @@ static PyMethodDef TunnelMethods[] = {
     },
     {
         "close", (PyCFunction) Tunnel_close, METH_NOARGS,
-        "Closes an open tunnel"
+        "Closes an open tunnel."
+    },
+    {
+        "status", (PyCFunction) Tunnel_status, METH_NOARGS,
+        "Returns the current state of the tunnel."
     },
     {
         NULL, NULL, 0, NULL
@@ -354,6 +359,19 @@ static PyObject* Tunnel_close(TunnelObject* self, PyObject* args) {
     }
 
     Py_RETURN_NONE;
+}
+
+static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored)) {
+    printf("Tunnel.status\n");
+
+    nabto_tunnel_state_t state = NTCS_CLOSED;
+    nabto_status_t st = nabtoTunnelInfo(self->tunnel, NTI_STATUS, sizeof(state), &state);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+
+    return PyLong_FromLong(state);
 }
 
 static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args) {

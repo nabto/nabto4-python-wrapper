@@ -60,11 +60,17 @@ def nabto_stuff():
             dev.addUser("cristi", "34e0834b008f0ee3748de75ecee71802")
             # print(dev.pairWithDevice(USER))
             print(dev.getUsers())
-            return
+            # return
 
-        with nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, 8090) as port:
-            print(f'Opened tunnel on port {port}')
-            sleep(30)
+        tunnel = nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT)
+        port = tunnel.openTcp()
+        print(f'Opened tunnel on port {port}')
+        print(f'Tunnel status is {tunnel.status()}')
+        sleep(30)
+        tunnel.close()
+        # with nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, 8090) as port:
+        #     print(f'Opened tunnel on port {port}')
+        #     sleep(30)
     nabto_client.shutdown()
 
 
