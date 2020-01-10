@@ -33,7 +33,7 @@ Let's take a look at a quick example of using `nabto_client` to open a session a
     nabto_client.startup(NABTO_HOME_DIRECTORY)
     
     # Creates a Nabto self signed profile
-    nabto_client.NabtoProfile.createSelfSignedProfile(USER, PASSWORD)
+    nabto_client.createSelfSignedProfile(USER, PASSWORD)
     
     with nabto_client.NabtoSession(USER, PASSWORD) as session:
         with nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT) as port:
@@ -42,3 +42,7 @@ Let's take a look at a quick example of using `nabto_client` to open a session a
             
     # Releases any resources held by the Nabto client API
     nabto_client.shutdown()
+
+You can also run `example/cli.py` for an interactive example.
+
+    python example/cli.py --device example.appmyproduct.com

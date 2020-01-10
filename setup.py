@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_py import build_py as _build_py
 
-VERSION = '0.2.2'
+VERSION = '0.2.3'
 
 
 def read(f):
