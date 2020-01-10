@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, Extension
 from setuptools.command.build_py import build_py as _build_py
 
-VERSION = '0.2.0'
+VERSION = '0.2.2'
 
 
 def read(f):
@@ -68,6 +68,7 @@ setup(
     author_email='alexandru.gandrabur@tremend.com',
     description="""Nabto Client Wrapper for Python""",
     url='https://www.nabto.com/developer',
+    license='MIT',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     python_requires=">=3.6",
@@ -77,6 +78,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'License :: OSI Approved :: MIT License',
     ],
 )
