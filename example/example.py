@@ -63,11 +63,14 @@ def nabto_stuff():
             # return
 
         tunnel = nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT)
+        print(f'Tunnel status is {tunnel.status()}')
         port = tunnel.openTcp()
         print(f'Opened tunnel on port {port}')
         print(f'Tunnel status is {tunnel.status()}')
         sleep(30)
         tunnel.close()
+        if nabto_client.TunnelStatus.CLOSED == tunnel.status():
+            print(f'Tunnel is closed')
         # with nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, 8090) as port:
         #     print(f'Opened tunnel on port {port}')
         #     sleep(30)

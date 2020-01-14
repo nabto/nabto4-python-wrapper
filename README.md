@@ -43,6 +43,21 @@ Let's take a look at a quick example of using `nabto_client` to open a session a
     # Releases any resources held by the Nabto client API
     nabto_client.shutdown()
 
+### Tunnel status
+The example above doesn't allow to query the current status of the tunnel because the context manager returns the port not the tunnel object.
+
+If you want to query the tunnel status, don't use the context manager, instead create and open a tunnel like this:
+
+    tunnel = nabto_client.NabtoTunnel(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT)
+    print(f'Tunnel status is {tunnel.status()}') # -1 or TunnelStatus.CLOSED
+    port = tunnel.openTcp()
+    print(f'Opened tunnel on port {port}')
+    print(f'Tunnel status is {tunnel.status()}') # 3 or TunnelStatus.LOCAL
+    # ... do something with the tunnel
+    tunnel.close()
+    if nabto_client.TunnelStatus.CLOSED == tunnel.status():
+        print(f'Tunnel is closed')
+
 You can also run `example/cli.py` for an interactive example.
 
     python example/cli.py --device example.appmyproduct.com

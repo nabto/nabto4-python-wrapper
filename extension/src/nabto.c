@@ -365,10 +365,12 @@ static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored))
     printf("Tunnel.status\n");
 
     nabto_tunnel_state_t state = NTCS_CLOSED;
-    nabto_status_t st = nabtoTunnelInfo(self->tunnel, NTI_STATUS, sizeof(state), &state);
-    if (st != NABTO_OK) {
-        PyErr_SetString(NabtoError, nabtoStatusStr(st));
-        return NULL;
+    if (self->tunnel != NULL) {
+        nabto_status_t st = nabtoTunnelInfo(self->tunnel, NTI_STATUS, sizeof(state), &state);
+        if (st != NABTO_OK) {
+            PyErr_SetString(NabtoError, nabtoStatusStr(st));
+            return NULL;
+        }
     }
 
     return PyLong_FromLong(state);
