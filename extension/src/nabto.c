@@ -1,6 +1,5 @@
 #include <Python.h>
 #include <structmember.h>
-#include <stdio.h>
 #include "nabto_client_api.h"
 
 static PyObject* NabtoError = NULL;
@@ -169,7 +168,6 @@ PyMODINIT_FUNC PyInit_nabto(void) {
 // Session API
 
 static PyObject* py_nabtoStartup(PyObject* self, PyObject *args) {
-    printf("nabtoStartup\n");
     char *homeDir = NULL;
     if (!PyArg_ParseTuple(args, "s", &homeDir)) {
         return NULL;
@@ -185,7 +183,6 @@ static PyObject* py_nabtoStartup(PyObject* self, PyObject *args) {
 }
 
 static PyObject* py_nabtoShutdown(PyObject* self, PyObject *args) {
-    printf("nabtoShutdown\n");
     nabto_status_t st = nabtoShutdown();
     if (st != NABTO_OK) {
         PyErr_SetString(NabtoError, nabtoStatusStr(st));
@@ -220,7 +217,6 @@ static void Session_dealloc(SessionObject *self) {
 }
 
 static PyObject* Session_open(SessionObject* self, PyObject *args) {
-    printf("Session.open\n");
     char* id = NULL;
     char* password = NULL;
     if (!PyArg_ParseTuple(args, "ss", &id, &password)) {
@@ -236,7 +232,6 @@ static PyObject* Session_open(SessionObject* self, PyObject *args) {
 }
 
 static PyObject* Session_close(SessionObject* self, PyObject *Py_UNUSED(ignored)) {
-    printf("Session.close\n");
     nabto_handle_t session = self->session;
     self->session = NULL;
     nabto_status_t st = nabtoCloseSession(session);
@@ -249,7 +244,6 @@ static PyObject* Session_close(SessionObject* self, PyObject *Py_UNUSED(ignored)
 }
 
 static PyObject* Session_rpcSetDefaultInterface(SessionObject* self, PyObject *args) {
-    printf("Session.rpcSetDefaultInterface\n");
     char* interfaceDefinition = NULL;
     char* err = NULL;
     if (!PyArg_ParseTuple(args, "s", &interfaceDefinition)) {
@@ -269,7 +263,6 @@ static PyObject* Session_rpcSetDefaultInterface(SessionObject* self, PyObject *a
 }
 
 static PyObject* Session_rpcInvoke(SessionObject* self, PyObject *args) {
-    printf("Session.rpcInvoke\n");
     char* url = NULL;
     char* response = NULL;
     if (!PyArg_ParseTuple(args, "s", &url)) {
@@ -303,7 +296,6 @@ static void Tunnel_dealloc(TunnelObject *self) {
 }
 
 static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args) {
-    printf("Tunnel.openTcp\n");
     PyObject* session = NULL;
     long localPort = 0;
     char* nabtoHost = NULL;
@@ -349,7 +341,6 @@ static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args) {
 }
 
 static PyObject* Tunnel_close(TunnelObject* self, PyObject* args) {
-    printf("Tunnel.close\n");
     nabto_tunnel_t tunnel = self->tunnel;
     self->tunnel = NULL;
     nabto_status_t st = nabtoTunnelClose(tunnel);
@@ -362,8 +353,6 @@ static PyObject* Tunnel_close(TunnelObject* self, PyObject* args) {
 }
 
 static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored)) {
-    printf("Tunnel.status\n");
-
     nabto_tunnel_state_t state = NTCS_CLOSED;
     if (self->tunnel != NULL) {
         nabto_status_t st = nabtoTunnelInfo(self->tunnel, NTI_STATUS, sizeof(state), &state);
@@ -377,7 +366,6 @@ static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored))
 }
 
 static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args) {
-    printf("nabtoCreateSelfSignedProfile\n");
     char* id = NULL;
     char* password = NULL;
     if (!PyArg_ParseTuple(args, "ss", &id, &password)) {
@@ -393,7 +381,6 @@ static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args)
 }
 
 static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args) {
-    printf("nabtoRemoveProfile\n");
     char* id = NULL;
     if (!PyArg_ParseTuple(args, "s", &id)) {
         return NULL;
@@ -408,7 +395,6 @@ static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args) {
 }
 
 static PyObject* py_nabtoGetFingerprint(PyObject* self, PyObject *args) {
-    printf("nabtoGetFingerprint\n");
     char* id = NULL;
     char fingerprint[16];
     if (!PyArg_ParseTuple(args, "s", &id)) {
