@@ -18,8 +18,14 @@ upload:
 	@echo Uploading to PyPI
 	twine upload -r testpypi dist/*
 
+docs:
+	touch nabto_client/nabto.py
+	pdoc --html --force nabto_client
+	rm nabto_client/nabto.py
+
 clean:
 	@echo Clean up
 	rm -rf build
 	rm -rf dist
 	rm -rf nabto_client.egg-info
+	rm -rf html

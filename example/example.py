@@ -17,9 +17,9 @@ class NabtoDevice:
     def rpcInvoke(self, f: str, args: dict):
         if args:
             params = urllib.parse.urlencode(args)
-            return self.session.RpcInvoke(f"nabto://{self.deviceID}/{f}?{params}")
+            return self.session.rpcInvoke(f"nabto://{self.deviceID}/{f}?{params}")
 
-        return self.session.RpcInvoke(f"nabto://{self.deviceID}/{f}")
+        return self.session.rpcInvoke(f"nabto://{self.deviceID}/{f}")
 
     def addUser(self, user, fingerprint):
         resp = self.rpcInvoke("add_user.json", {"name": user, "fingerprint": fingerprint})
@@ -55,7 +55,7 @@ def nabto_stuff():
 
     with nabto_client.NabtoSession(USER, PASSWORD) as session:
         with open(NABTO_QUERIES) as file:
-            session.RpcSetDefaultInterface(file.read())
+            session.rpcSetDefaultInterface(file.read())
             dev = NabtoDevice(NABTO_HOST, session)
             dev.addUser("cristi", "34e0834b008f0ee3748de75ecee71802")
             # print(dev.pairWithDevice(USER))
