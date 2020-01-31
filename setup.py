@@ -44,21 +44,6 @@ nabto_cpython = Extension(
     libraries=['nabto_client_api_static', 'nabto_static_external', 'stdc++'],
 )
 
-if sys.argv[-1] == 'publish':
-    if os.system("make check-twine"):
-        print("twine not installed.\nUse `pip install twine`.\nExiting.")
-        sys.exit()
-
-    os.system("make build")
-
-    if os.system("make check-dist"):
-        print("twine check failed. Packages might be outdated.")
-        sys.exit()
-
-    os.system("make upload")
-    os.system("make clean")
-    sys.exit()
-
 setup(
     name='nabto_client',
     version=VERSION,

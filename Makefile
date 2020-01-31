@@ -4,7 +4,11 @@ all: build
 
 check-twine:
 	@echo Checking twine
-	pip freeze | grep twine
+	@if pip freeze | grep twine; then\
+		echo "twine is installed";\
+	else\
+		echo "Use 'pip install twine' to install twine";\
+	fi
 
 build:
 	@echo Building the library
@@ -14,7 +18,7 @@ check-dist:
 	@echo Checking the distribution
 	twine check dist/*
 
-upload:
+upload: check-twine build check-dist
 	@echo Uploading to PyPI
 	twine upload -r testpypi dist/*
 
