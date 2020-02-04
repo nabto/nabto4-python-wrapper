@@ -7,7 +7,7 @@ NABTO_HOME_DIRECTORY = os.path.join(PARENT_DIRECTORY, 'share', 'nabto')
 NABTO_QUERIES = os.path.join(PARENT_DIRECTORY, 'unabto_queries.xml')
 
 class NabtoDevice:
-    deviceID: str 
+    deviceID: str
     session: nabto.Session = None
 
     def __init__(self, id: str, session: nabto.Session):
@@ -46,11 +46,7 @@ def main():
     nabto.nabtoStartup(NABTO_HOME_DIRECTORY)
     print(nabto.nabtoVersionString())
 
-    nabto.nabtoCreateSelfSignedProfile("alex3", "mypassword")
-    print(nabto.nabtoGetFingerprint("alex3"))
-    time.sleep(5)
-    nabto.nabtoRemoveProfile("alex3")
-
+    nabto.nabtoCreateSelfSignedProfile("alex", "mypassword")
 
     session = nabto.Session()
     session.open(USER, PASSWORD)
@@ -58,7 +54,7 @@ def main():
         session.rpcSetDefaultInterface(file.read())
         dev = NabtoDevice(NABTO_HOST, session)
         print(dev.getUsers())
-    
+
     tunnel = nabto.Tunnel()
     port = tunnel.openTcp(session, LOCAL_PORT, NABTO_HOST, REMOTE_HOST, REMOTE_PORT)
     print(f"Opened tunnel on port {port}")

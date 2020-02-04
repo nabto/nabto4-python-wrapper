@@ -65,7 +65,7 @@ static PyMethodDef NabtoMethods[] = {
 
 static PyMethodDef SessionMethods[] = {
     {
-        "open", (PyCFunction) Session_open, METH_VARARGS, 
+        "open", (PyCFunction) Session_open, METH_VARARGS,
         "Starts a new Nabto session as context for RPC, stream or tunnel invocation using the specified profile."
     },
     {
@@ -174,6 +174,12 @@ static PyObject* py_nabtoStartup(PyObject* self, PyObject *args) {
     }
 
     nabto_status_t st = nabtoStartup(homeDir);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+
+    st = nabtoInstallDefaultStaticResources(NULL);
     if (st != NABTO_OK) {
         PyErr_SetString(NabtoError, nabtoStatusStr(st));
         return NULL;
@@ -309,7 +315,7 @@ static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args) {
         return NULL;
     }
     nabto_handle_t session_obj = ((SessionObject*)session)->session;
-    
+
     // start tunnel operations
     nabto_status_t st = nabtoTunnelOpenTcp(&self->tunnel, session_obj, localPort, nabtoHost, remoteHost, remotePort);
     if (st != NABTO_OK) {
@@ -335,7 +341,7 @@ static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args) {
     if (st != NABTO_OK) {
         PyErr_SetString(NabtoError, nabtoStatusStr(st));
         return NULL;
-    }    
+    }
 
     return PyLong_FromLong(port);
 }
