@@ -22,7 +22,7 @@ class build_ext_first(_build_py):
     def run(self):
         self.run_command('build_ext')
         _build_py.run(self)
-        self.move_extension_to_package()
+        # self.move_extension_to_package()
 
 os_type = ""
 if sys.platform == "linux":

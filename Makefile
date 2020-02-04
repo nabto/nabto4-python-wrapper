@@ -23,9 +23,9 @@ upload: check-twine build check-dist
 	twine upload -r testpypi dist/*
 
 docs:
-	touch nabto_client/nabto.py
+	touch nabto.py
 	pdoc --html --force nabto_client
-	rm nabto_client/nabto.py
+	rm nabto.py
 
 clean:
 	@echo Clean up

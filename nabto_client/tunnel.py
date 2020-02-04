@@ -1,4 +1,4 @@
-import nabto_client.nabto as nabto
+import nabto
 from nabto_client.session import NabtoSession
 
 class NabtoTunnel:

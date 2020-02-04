@@ -1,4 +1,4 @@
-import nabto_client.nabto as nabto
+import nabto
 
 def createSelfSignedProfile(id: str, password: str):
     """

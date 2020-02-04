@@ -1,6 +1,6 @@
 import os, time, json
 import urllib.parse
-from nabto_client import nabto
+import nabto
 
 PARENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 NABTO_HOME_DIRECTORY = os.path.join(PARENT_DIRECTORY, 'share', 'nabto')
@@ -46,7 +46,7 @@ def main():
     nabto.nabtoStartup(NABTO_HOME_DIRECTORY)
     print(nabto.nabtoVersionString())
 
-    nabto.nabtoCreateProfile("alex3", "mypassword")
+    nabto.nabtoCreateSelfSignedProfile("alex3", "mypassword")
     print(nabto.nabtoGetFingerprint("alex3"))
     time.sleep(5)
     nabto.nabtoRemoveProfile("alex3")
