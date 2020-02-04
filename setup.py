@@ -13,7 +13,7 @@ def read(f):
 
 class build_ext_first(_build_py):
     def move_extension_to_package(self):
-        for f in glob.glob("build/lib.linux-**/*.so", recursive=False):
+        for f in glob.glob("build/lib.**/*.so", recursive=False):
             chunks = f.split("/")
             new_name = "/".join([chunks[0], chunks[1], "nabto_client", chunks[2]],)
             print(f"Moving {f} to {new_name}")
