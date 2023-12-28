@@ -47,6 +47,7 @@ def main():
     print(nabto.nabtoVersionString())
 
     nabto.nabtoCreateSelfSignedProfile("alex", "mypassword")
+    #nabto.nabtoCreateProfile(USER, PASSWORD) #For Nabto CA profile
 
     session = nabto.Session()
     session.open(USER, PASSWORD)

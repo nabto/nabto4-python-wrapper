@@ -67,7 +67,7 @@ class NabtoCmd(Cmd):
 
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
-                session.RpcSetDefaultInterface(file.read())
+                session.rpcSetDefaultInterface(file.read())
 
             dev = NabtoDevice(self.device_name, session)
             print(dev.pairWithDevice(args))
@@ -82,7 +82,7 @@ class NabtoCmd(Cmd):
 
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
-                session.RpcSetDefaultInterface(file.read())
+                session.rpcSetDefaultInterface(file.read())
 
             with nabto_client.NabtoTunnel(session, 0, self.device_name, 'localhost', int(remote_port)) as port:
                 print(f'Opened tunnel on port {port}. Sleep for 30 seconds.')
@@ -99,7 +99,7 @@ class NabtoCmd(Cmd):
 
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
-                session.RpcSetDefaultInterface(file.read())
+                session.rpcSetDefaultInterface(file.read())
 
             dev = NabtoDevice(self.device_name, session)
             print(dev.addUser(user, fingerprint))
@@ -114,7 +114,7 @@ class NabtoCmd(Cmd):
 
         with nabto_client.NabtoSession(self.user, self.password) as session:
             with open(NABTO_QUERIES) as file:
-                session.RpcSetDefaultInterface(file.read())
+                session.rpcSetDefaultInterface(file.read())
 
             dev = NabtoDevice(self.device_name, session)
             print(dev.getUsers())
