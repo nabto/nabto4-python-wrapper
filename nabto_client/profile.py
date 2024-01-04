@@ -1,5 +1,13 @@
 import nabto
 
+def createProfile(id: str, password: str):
+    """
+    Creates a Nabto CA signed profile with provided `id` (an email)
+    and the `password` which protects the private key. After the profile has
+    been created it can be used with a `NabtoSession`.
+    """
+    return nabto.nabtoCreateProfile(id, password)
+
 def createSelfSignedProfile(id: str, password: str):
     """
     Creates a Nabto self signed profile with provided `id` (typically an email or user name)

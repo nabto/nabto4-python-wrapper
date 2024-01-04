@@ -29,6 +29,7 @@ static PyObject* Tunnel_openTcp(TunnelObject* self, PyObject* args);
 static PyObject* Tunnel_close(TunnelObject* self, PyObject* args);
 static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored));
 // Profile
+static PyObject* py_nabtoCreateProfile(PyObject* self, PyObject *args);
 static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args);
 static PyObject* py_nabtoRemoveProfile(PyObject* self, PyObject *args);
 static PyObject* py_nabtoGetFingerprint(PyObject* self, PyObject *args);
@@ -45,6 +46,10 @@ static PyMethodDef NabtoMethods[] = {
     {
         "nabtoVersionString", py_nabtoVersionString, METH_NOARGS,
         "Get the underlying C libs Nabto software version (major.minor.patch[-prerelease tag]+build)"
+    },
+    {
+        "nabtoCreateProfile", py_nabtoCreateProfile, METH_VARARGS,
+        "Creates a Nabto CA signed profile. This function creates a private key and a signed certificate on this computer for a specified user that already must exist in a central user management service."
     },
     {
         "nabtoCreateSelfSignedProfile", py_nabtoCreateSelfSignedProfile, METH_VARARGS,
@@ -369,6 +374,21 @@ static PyObject* Tunnel_status(TunnelObject* self, PyObject *Py_UNUSED(ignored))
     }
 
     return PyLong_FromLong(state);
+}
+
+static PyObject* py_nabtoCreateProfile(PyObject* self, PyObject *args) {
+    char* id = NULL;
+    char* password = NULL;
+    if (!PyArg_ParseTuple(args, "ss", &id, &password)) {
+        return NULL;
+    }
+    nabto_status_t st = nabtoCreateProfile(id, password);
+    if (st != NABTO_OK) {
+        PyErr_SetString(NabtoError, nabtoStatusStr(st));
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
 }
 
 static PyObject* py_nabtoCreateSelfSignedProfile(PyObject* self, PyObject *args) {
