@@ -2,13 +2,25 @@ import glob
 import os
 import sys
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext as _build_ext
 from setuptools.command.build_py import build_py as _build_py
 
-VERSION = '1.0.1'
+VERSION = '1.1.0'
 
 
 def read(f):
     return open(f, 'r', encoding='utf-8').read()
+
+
+class build_ext_with_shared_lib(_build_ext):
+    """Copies the Nabto shared library next to the built extension module."""
+
+    def run(self):
+        _build_ext.run(self)
+        for lib in glob.glob('extension/{0}/lib/libnabto_client_api.*'.format(os_type)):
+            dest = os.path.join(self.build_lib, os.path.basename(lib))
+            self.mkpath(self.build_lib)
+            self.copy_file(lib, dest)
 
 
 class build_ext_first(_build_py):
@@ -34,6 +46,11 @@ elif sys.platform == "win64":
 elif sys.platform == "darwin":
     os_type = "mac64"
 
+if sys.platform == "darwin":
+    rpath = '@loader_path'
+else:
+    rpath = '$ORIGIN'
+
 nabto_cpython = Extension(
     'nabto',
     sources=[
@@ -41,13 +58,15 @@ nabto_cpython = Extension(
     ],
     include_dirs=['extension/{0}/include/'.format(os_type)],
     library_dirs=['extension/{0}/lib/'.format(os_type)],
-    libraries=['nabto_client_api_static', 'nabto_static_external', 'stdc++'],
+    libraries=['nabto_client_api'],
+    runtime_library_dirs=[rpath] if sys.platform != "darwin" else [],
+    extra_link_args=['-Wl,-rpath,' + rpath] if sys.platform == "darwin" else [],
 )
 
 setup(
     name='nabto_client',
     version=VERSION,
-    cmdclass={'build_py': build_ext_first},
+    cmdclass={'build_py': build_ext_first, 'build_ext': build_ext_with_shared_lib},
     packages=['nabto_client'],
     author='Alexandru Gandrabur',
     author_email='alexandru.gandrabur@tremend.com',
